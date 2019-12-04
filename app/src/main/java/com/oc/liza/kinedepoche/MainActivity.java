@@ -1,7 +1,7 @@
 package com.oc.liza.kinedepoche;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,76 +9,90 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, ExerciseFragment.OnFragmentInteractionListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.activity_drawer_layout)
-    DrawerLayout drawerLayout;
-    @BindView(R.id.activity_main_navigation_view)
-    NavigationView navigationView;
-    @BindView(R.id.navigation)
-    BottomNavigationView navigation;
 
-    private TextView mTextMessage;
+    private boolean tablet = false;
+    private NavHostFragment host;
 
-    //BOTTOM NAVIGATION
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_theory:
-                    mTextMessage.setText(R.string.title_theory);
-                    return true;
-                case R.id.navigation_exercises:
-                    mTextMessage.setText(R.string.title_exercises);
-                    return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        mTextMessage = findViewById(R.id.message);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        checkIfTablet();
         initToolbar();
-        configureDrawerLayout();
+
     }
+
+
+    private void setupNavigationMenu(NavController navController) {
+        // TODO STEP 9.4 - Use NavigationUI to set up a Navigation View
+//        // In split screen mode, you can drag this view out from the left
+//        // This does NOT modify the actionbar
+//        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
+//        sideNavView?.setupWithNavController(navController)
+        // TODO END STEP 9.4
+    }
+
+    private void setupActionBar(NavController navController,
+                                AppBarConfiguration appBarConfig) {
+        // TODO STEP 9.6 - Have NavigationUI handle what your ActionBar displays
+//        // This allows NavigationUI to decide what label to show in the action bar
+//        // By using appBarConfig, it will also determine whether to
+//        // show the up arrow or drawer menu icon
+//        setupActionBarWithNavController(navController, appBarConfig)
+        // TODO END STEP 9.6
+    }
+
+
+    private void checkIfTablet() {
+        //IF TABLET, SHOW DRAWER
+        if (getResources().getBoolean(R.bool.isTablet)) {
+            tablet = true;
+            setNavigationTablet();
+        }
+        //IF PHONE SHOW BOTTOM NAVIGATION
+        else {
+            setNavigationPhone();
+        }
+    }
+
+    //SET UP BOTTOM NAVIGATION
+    private void setNavigationPhone() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        NavigationUI.setupWithNavController(bottomNavigationView,
+                host.getNavController());
+    }
+
+    //SET UP DRAWER NAVIGATION
+    private void setNavigationTablet() {
+        NavigationView sideNavView = findViewById(R.id.activity_main_navigation_view);
+        NavigationUI.setupWithNavController(sideNavView,
+                host.getNavController());
+        initDrawerHeader(sideNavView);
+    }
+
 
     private void initToolbar() {
         setSupportActionBar(toolbar);
     }
 
     // Configure Drawer Layout
-    private void configureDrawerLayout() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        initDrawerHeader();
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void initDrawerHeader() {
+    private void initDrawerHeader(NavigationView navigationView) {
         //Inflate header layout
         View navView = navigationView.inflateHeaderView(R.layout.drawer_header_main);
 
@@ -91,31 +105,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            this.drawerLayout.closeDrawer(GravityCompat.START);
-        }
-    }
-
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_statistics:
-                System.out.println("statistics");
-                break;
-            case R.id.action_settings:
-                System.out.println("settings");
-                break;
-            case R.id.action_notification:
-                System.out.println("notification");
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
+    public void onFragmentInteraction(Uri uri) {
 
+    }
 }

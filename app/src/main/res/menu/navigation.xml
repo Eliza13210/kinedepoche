@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/home_dest"
         android:icon="@drawable/outline_house_black_24"
-        android:title="@string/title_home" />
+        android:orderInCategory="1"
+        android:title="@string/title_home"
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/navigation_theory"
+        android:id="@+id/theory_dest"
         android:icon="@drawable/outline_local_library_black_24"
-        android:title="@string/title_theory" />
+        android:orderInCategory="2"
+        android:title="@string/title_theory"
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/navigation_exercises"
+        android:id="@+id/exercise_dest"
         android:icon="@drawable/outline_directions_run_black_24"
-        android:title="@string/title_exercises" />
+        android:orderInCategory="2"
+        android:title="@string/title_exercises"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/statistics_dest"
+        android:icon="@drawable/outline_bar_chart_black_24"
+        android:orderInCategory="2"
+        android:title="@string/statistics"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/settings_dest"
+        android:icon="@drawable/outline_settings_applications_24"
+        android:orderInCategory="2"
+        android:title="@string/settings"
+        app:showAsAction="always" />
 
 </menu>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/home_dest">
+
+    <fragment
+        android:id="@+id/home_dest"
+        android:name="com.oc.liza.kinedepoche.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+        android:id="@+id/next_action"
+        app:destination="@+id/theory_dest"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/theory_dest"
+        android:name="com.oc.liza.kinedepoche.TheoryFragment"
+        android:label="@string/theory"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/exercise_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/exercise_dest"
+        android:name="com.oc.liza.kinedepoche.ExerciseFragment"
+        android:label="@string/exercises"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/next_action"
+        app:popUpTo="@id/home_dest"/>
+
+    </fragment>
+
+
+</navigation>
