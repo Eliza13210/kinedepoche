@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -12,40 +11,59 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
-        android:id="@+id/next_action"
-        app:destination="@+id/theory_dest"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/theory_dest"
-        android:name="com.oc.liza.kinedepoche.TheoryFragment"
-        android:label="@string/theory"
-        tools:layout="@layout/fragment_home">
-
-        <action
             android:id="@+id/next_action"
-            app:destination="@+id/exercise_dest"
+            app:destination="@+id/computer_exercise_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-
     </fragment>
+
+    <fragment
+        android:id="@+id/theory_dest"
+        android:name="com.oc.liza.kinedepoche.TheoryFragment"
+        android:label="@string/theory"
+        tools:layout="@layout/fragment_theory" />
 
     <fragment
         android:id="@+id/exercise_dest"
         android:name="com.oc.liza.kinedepoche.ExerciseFragment"
         android:label="@string/exercises"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_exercise">
         <action
             android:id="@+id/next_action"
-        app:popUpTo="@id/home_dest"/>
-
+            app:destination="@+id/computer_exercise_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="program"
+            app:argType="integer"
+            android:defaultValue="1"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/settings_dest"
+        android:name="com.oc.liza.kinedepoche.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/statistics_dest"
+        android:name="com.oc.liza.kinedepoche.StatisticsFragment"
+        android:label="@string/statistics"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/computer_exercise_dest"
+        android:name="com.oc.liza.kinedepoche.ComputerExerciseFragment"
+        android:label="@string/comp_exercise"
+        tools:layout="@layout/fragment_computer_exercise" >
+    <argument
+        android:name="program"
+        app:argType="string"
+        android:defaultValue="1"/>
+    </fragment>
 
 </navigation>

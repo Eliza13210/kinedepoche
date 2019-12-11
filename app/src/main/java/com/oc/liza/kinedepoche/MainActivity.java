@@ -1,6 +1,5 @@
 package com.oc.liza.kinedepoche;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, ExerciseFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -105,9 +104,4 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     }
 
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }
