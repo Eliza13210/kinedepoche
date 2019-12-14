@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="4dp"
+    android:orientation="vertical"
     tools:context=".StatisticsFragment">
 
-    <com.jjoe64.graphview.GraphView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="200dip"
-        android:id="@+id/graph" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/statistics"
+        android:textSize="@dimen/title_big" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The graph shows you the last 7 days, measured in percentage of completed program." />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:title="title"
+        app:seriesColor="@color/colorPrimaryDark"
+        app:seriesTitle="percentage" />
+
+</LinearLayout>

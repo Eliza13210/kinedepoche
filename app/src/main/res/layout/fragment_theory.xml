@@ -3,11 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="4dp"
     tools:context=".TheoryFragment">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Why?"
+        android:textSize="@dimen/title_big"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Musculoskeletal symptoms are quite common, headache and back pain being most common symptoms.
+        These symptoms are associated with prolonged use of computer and internet and often left unreported and unrelated.
+        association between computer work per se and tension neck syndrome. ."/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="How?"
+        android:textSize="@dimen/title_big"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take breaks every hour and do the exercises to release tensions and give oxygen to the muscles"/>
 
 </LinearLayout>

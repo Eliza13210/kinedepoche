@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar android:id="@+id/toolbar"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
     android:background="@color/colorPrimary"
     android:elevation="4dp"
     android:minHeight="?actionBarSize"
-    app:layout_constraintHeight_min="56dp"
-    app:titleTextColor="@color/white"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
-</androidx.appcompat.widget.Toolbar >
+    app:layout_constraintHeight_min="56dp"
+    app:titleTextColor="@color/white">
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mon_kine_de_poche"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        />
+
+</androidx.appcompat.widget.Toolbar>

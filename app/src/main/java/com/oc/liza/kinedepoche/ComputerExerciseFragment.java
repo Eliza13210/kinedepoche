@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
@@ -24,5 +25,11 @@ public class ComputerExerciseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_computer_exercise, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 }

@@ -6,21 +6,21 @@
         android:id="@+id/home_dest"
         android:icon="@drawable/outline_house_black_24"
         android:orderInCategory="1"
-        android:title="@string/title_home"
+        android:title="@string/home"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/theory_dest"
         android:icon="@drawable/outline_local_library_black_24"
         android:orderInCategory="2"
-        android:title="@string/title_theory"
+        android:title="@string/theory"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/exercise_dest"
         android:icon="@drawable/outline_directions_run_black_24"
         android:orderInCategory="2"
-        android:title="@string/title_exercises"
+        android:title="@string/exercises"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/statistics_dest"
