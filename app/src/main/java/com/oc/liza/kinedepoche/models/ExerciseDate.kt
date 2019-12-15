@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE)])
 class ExerciseDate(@PrimaryKey(autoGenerate = true) val id: Long? = null,
                    var userId: Long,
+                   var date: String,
                    var progress: Int = 0,
                    var exOne: Boolean = false,
                    var exTwo: Boolean = false,
