@@ -1,10 +1,12 @@
-package com.oc.liza.kinedepoche;
+package com.oc.liza.kinedepoche.controllers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.oc.liza.kinedepoche.R;
 
 import java.util.Objects;
 

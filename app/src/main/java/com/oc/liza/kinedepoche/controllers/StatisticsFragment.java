@@ -1,4 +1,4 @@
-package com.oc.liza.kinedepoche;
+package com.oc.liza.kinedepoche.controllers;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.oc.liza.kinedepoche.R;
 
 import java.util.Objects;
 

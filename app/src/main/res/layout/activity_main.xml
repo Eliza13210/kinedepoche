@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     app:tabMode="scrollable"
-    tools:context=".MainActivity">
+    tools:context=".controllers.MainActivity">
 
     <include layout="@layout/toolbar" />
 

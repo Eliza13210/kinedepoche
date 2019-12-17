@@ -1,22 +1,19 @@
-package com.oc.liza.kinedepoche;
+package com.oc.liza.kinedepoche.controllers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import java.util.Objects;
+import com.oc.liza.kinedepoche.R;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 
 
-public class HomeFragment extends Fragment {
+public class ComputerExerciseFragment extends Fragment {
 
-
-    public HomeFragment() {
+    public ComputerExerciseFragment() {
         // Required empty public constructor
     }
 
@@ -29,19 +26,18 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_computer_exercise, container, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //SET LISTENER TO IMAGE VIEW
-        ImageView exercise = Objects.requireNonNull(getView()).findViewById(R.id.program);
-        exercise.setClickable(true);
-        exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
-
-
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+    }
 }

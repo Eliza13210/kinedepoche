@@ -36,8 +36,8 @@ public class UserViewModel extends ViewModel {
         return mUserRepository.getAllUsers();
     }
 
-    public long createUser(User user) {
-        return mUserRepository.createUser(user);
+    public void createUser(User user) {
+        executor.execute(() -> mUserRepository.createUser(user));
     }
 
     public void updateUser(User user) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeFragment">
+    tools:context=".controllers.HomeFragment">
 
     <TextView
         android:id="@+id/welcome_message"
@@ -64,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <!-- USER NAME-->

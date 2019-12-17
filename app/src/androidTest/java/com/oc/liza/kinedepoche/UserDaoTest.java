@@ -26,7 +26,7 @@ public class UserDaoTest {
 
     // DATA SET FOR TEST
     private static long USER_ID = 1;
-    private static User USER_DEMO = new User(USER_ID, true, 2);
+    private static User USER_DEMO = new User(USER_ID, "Jack",true, 2);
 
 
     // FOR DATA

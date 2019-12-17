@@ -17,8 +17,8 @@ class UserRepository(val userDao: UserDao) {
 
     // --- CREATE ---
 
-    fun createUser(user: User): Long {
-        return this.userDao.createUser(user)
+    fun createUser(user: User) {
+        userDao.createUser(user)
     }
 
     // --- DELETE ---
