@@ -8,9 +8,13 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.oc.liza.kinedepoche.R;
+import com.oc.liza.kinedepoche.injections.Injection;
+import com.oc.liza.kinedepoche.injections.ViewModelFactory;
+import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean tablet = false;
     private NavHostFragment host;
+    public String userName;
+    public UserViewModel viewModel;
 
 
     @Override
@@ -38,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("");
         checkIfTablet();
         initToolbar();
+        initViewModel();
+    }
+
+    private void initViewModel(){
+
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        this.viewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel.class);
     }
 
 
@@ -93,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    // Configure Drawer Layout
+    // Configure Drawer Layout if tablet
     private void initDrawerHeader(NavigationView navigationView) {
         //Inflate header layout
         View navView = navigationView.inflateHeaderView(R.layout.drawer_header_main);

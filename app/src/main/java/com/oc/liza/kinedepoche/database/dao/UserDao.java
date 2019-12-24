@@ -21,6 +21,9 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE id = :id")
     LiveData<User> getUser(long id);
 
+    @Query("SELECT * FROM User WHERE name = :name")
+    LiveData<User> getUserByName(String name);
+
     @Query("SELECT * FROM User WHERE id = :id")
     Cursor getUserWithCursor(long id);
 

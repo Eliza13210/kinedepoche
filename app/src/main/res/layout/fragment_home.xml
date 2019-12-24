@@ -11,10 +11,10 @@
         android:id="@+id/welcome_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:text="@string/welcome"
         android:textAlignment="center"
-        android:textSize="@dimen/title_big" />
+        android:textSize="@dimen/_24ssp" />
 
 
     <FrameLayout
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:visibility="gone">
+        >
 
 
         <androidx.cardview.widget.CardView

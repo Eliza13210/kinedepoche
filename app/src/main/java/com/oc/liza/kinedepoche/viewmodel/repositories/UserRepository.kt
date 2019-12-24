@@ -11,6 +11,10 @@ class UserRepository(val userDao: UserDao) {
         return this.userDao.getUser(userId)
     }
 
+    fun getUserByName(userName: String): LiveData<User> {
+        return this.userDao.getUserByName(userName)
+    }
+
     fun getAllUsers(): LiveData<MutableList<User>>? {
         return this.userDao.getAllUsers()
     }

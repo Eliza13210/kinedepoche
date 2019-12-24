@@ -1,6 +1,6 @@
 package com.oc.liza.kinedepoche.controllers;
 
-import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,11 +12,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.oc.liza.kinedepoche.R;
 import com.oc.liza.kinedepoche.models.User;
+import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 
 import java.util.List;
 import java.util.Objects;
 
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 
@@ -38,52 +39,12 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.btn_save)
     MaterialButton buttonSave;
 
+    private Boolean loggedIn = false;
+    private String message = "";
+    private String userName;
+
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        //CHECK IF FIRST TIME USER
-        viewModel.getAllUsers().observe(this, this::updateWelcomeMessage);
-    }
-
-    private void updateWelcomeMessage(List<User> list) {
-        if (list.size() > 0) {
-            String message = "Welcome back " + list.get(0).getName() + "!";
-            welcomeTextView.setText(message);
-
-            userFrameLayout.setVisibility(View.VISIBLE);
-
-            //SET LISTENER TO IMAGE VIEW
-            initClickableImage();
-        } else {
-            //SET LISTENER TO SAVE BUTTON
-            firstTimeUserLayout.setVisibility(View.VISIBLE);
-            buttonSave.setOnClickListener(v -> saveUserName());
-        }
-    }
-
-    private void initClickableImage() {
-        ImageView exercise = Objects.requireNonNull(getView()).findViewById(R.id.program);
-        exercise.setClickable(true);
-        exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
-    }
-
-    private void saveUserName() {
-        if (!userNameInput.getText().toString().isEmpty()) {
-            String userName = Objects.requireNonNull(userNameInput.getText()).toString();
-            User user = new User();
-            user.setName(userName);
-
-            viewModel.createUser(user);
-
-        } else {
-            Toast.makeText(getActivity(), "Please choose a user name", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -91,9 +52,72 @@ public class HomeFragment extends BaseFragment {
         return R.layout.fragment_home;
     }
 
+
     @Override
-    public Fragment getFragment() {
-        return this;
+    public void onResume() {
+        super.onResume();
+        loggedIn = sharedPref.getBoolean("LoggedIn", false);
+        if (!loggedIn) {
+            userFrameLayout.setVisibility(View.GONE);
+            firstTimeUserLayout.setVisibility(View.VISIBLE);
+
+            buttonSave.setOnClickListener(v -> logInWithUserName());
+        } else {
+            updateWelcomeMessage();
+        }
     }
 
+    private void logInWithUserName() {
+        if (!Objects.requireNonNull(userNameInput.getText()).toString().isEmpty()) {
+            sharedViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+            sharedViewModel.getAllUsers().observe(this, this::checkIfUserExists);
+        } else {
+            Toast.makeText(getActivity(), "Please choose a user name", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void checkIfUserExists(List<User> list) {
+        //CHECK IF FIRST TIME USER
+        userName = Objects.requireNonNull(userNameInput.getText()).toString();
+
+        for (User user : list) {
+            if (user.getName().equals(userName)) {
+                message = "Welcome " + user.getName() + "!";
+                loggedIn = true;
+                sharedPref.edit().putLong("CurrentUser", user.getId()).apply();
+                sharedPref.edit().putString("CurrentUserName", user.getName()).apply();
+                sharedPref.edit().putBoolean("LoggedIn", true).apply();
+
+                Log.e("home", "existing user " + user.getName() + user.getId());
+            }
+        }
+        updateWelcomeMessage();
+    }
+
+
+    private void updateWelcomeMessage() {
+        if (!loggedIn) {
+            //CREATE USER
+            User newUser = new User();
+            newUser.setName(userName);
+            sharedViewModel.createUser(newUser);
+            Log.e("home", "create user " + userName);
+        }
+
+        userName = sharedPref.getString("CurrentUserName", null);
+        message = "Welcome " + userName + "!";
+        welcomeTextView.setText(message);
+
+        userFrameLayout.setVisibility(View.VISIBLE);
+        firstTimeUserLayout.setVisibility(View.GONE);
+
+        //SET LISTENER TO IMAGE VIEW
+        initClickableImage();
+    }
+
+    private void initClickableImage() {
+        ImageView exercise = Objects.requireNonNull(getView()).findViewById(R.id.program);
+        exercise.setClickable(true);
+        exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
+    }
 }

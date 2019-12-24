@@ -18,6 +18,9 @@ public interface DateDao {
     @Query("SELECT * FROM ExerciseDate WHERE userId = :userId")
     LiveData<List<ExerciseDate>> getDates(long userId);
 
+    @Query("SELECT * FROM ExerciseDate WHERE date = :date")
+    LiveData<ExerciseDate> getDate(String date);
+
     @Query("SELECT * FROM ExerciseDate WHERE userId = :userId")
     Cursor getDateWithCursor(long userId);
 

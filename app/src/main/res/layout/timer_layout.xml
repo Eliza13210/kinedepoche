@@ -53,14 +53,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/outline_pause_circle_outline_black_24" />
 
-            <TextView
-                android:id="@+id/pause_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="10 s"
-                android:textSize="@dimen/text_size_title" />
-
             <View
                 android:layout_width="1dp"
                 android:layout_height="32dp"
@@ -90,7 +82,7 @@
 
         <!--BUTTON-->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_search"
+            android:id="@+id/btn_start"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="48dp"

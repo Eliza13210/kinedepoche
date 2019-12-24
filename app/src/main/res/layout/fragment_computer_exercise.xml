@@ -68,6 +68,7 @@
     <!--PROGRESSBAR-->
     <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
         android:id="@+id/circular_progress"
+        android:visibility="gone"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="center"

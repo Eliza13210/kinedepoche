@@ -32,6 +32,10 @@ public class UserViewModel extends ViewModel {
         return mUserRepository.getUser(userId);
     }
 
+    public LiveData<User> getUserByName(String userName) {
+        return mUserRepository.getUserByName(userName);
+    }
+
     public LiveData<List<User>> getAllUsers() {
         return mUserRepository.getAllUsers();
     }
@@ -50,6 +54,10 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<List<ExerciseDate>> getDates(long userId) {
         return mExerciseDateRepository.getDates(userId);
+    }
+
+    public LiveData<ExerciseDate> getDate(String date){
+        return mExerciseDateRepository.getDate(date);
     }
 
     public void createDate(ExerciseDate date) {

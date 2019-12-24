@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="video_url_array">
+        <item>video1</item>
+        <item>video2</item>
+        <item>video3</item>
+        <item>video4</item>
+        <item>video5</item>
+    </string-array>
+
+    <string-array name="exercise_number_array">
+        <item>Exercise 1/5</item>
+        <item>Exercise 2/5</item>
+        <item>Exercise 3/5</item>
+        <item>Exercise 4/5</item>
+        <item>Exercise 5/5</item>
+    </string-array>
+
+    <string-array name="description_array">
+        <item>desc1</item>
+        <item>desc2</item>
+        <item>desc3</item>
+        <item>desc4</item>
+        <item>desc5</item>
+    </string-array>
+
+    <integer-array name="time_array">
+        <item>2</item>
+        <item>5</item>
+        <item>7</item>
+        <item>8</item>
+        <item>10</item>
+    </integer-array>
+
+    <integer-array name="repeat_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
+</resources>

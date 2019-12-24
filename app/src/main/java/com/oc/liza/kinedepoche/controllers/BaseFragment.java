@@ -1,5 +1,7 @@
 package com.oc.liza.kinedepoche.controllers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected UserViewModel viewModel;
+    protected long userId = 0;
+    protected SharedPreferences sharedPref;
+    protected UserViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,17 +33,14 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initViewModel(getFragment());
+        initViewModel();
+        sharedPref = getActivity().getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
     }
 
     public abstract int getLayoutView();
 
-    public abstract Fragment getFragment();
+    private void initViewModel() {
 
-
-    protected void initViewModel(Fragment fragment) {
-
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity());
-        this.viewModel = ViewModelProviders.of(fragment, mViewModelFactory).get(UserViewModel.class);
+        sharedViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
     }
 }

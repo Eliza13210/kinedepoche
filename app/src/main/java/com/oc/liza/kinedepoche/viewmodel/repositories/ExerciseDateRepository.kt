@@ -10,6 +10,10 @@ class ExerciseDateRepository(val dateDao: DateDao) {
         return this.dateDao.getDates(userId)
     }
 
+    fun getDate(date: String): LiveData<ExerciseDate> {
+        return this.dateDao.getDate(date)
+    }
+
     // --- CREATE ---
     fun createDate(date: ExerciseDate) {
         dateDao.insertDate(date)

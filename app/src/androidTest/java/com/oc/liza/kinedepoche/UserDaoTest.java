@@ -1,6 +1,7 @@
 package com.oc.liza.kinedepoche;
 
 import com.oc.liza.kinedepoche.database.UserDatabase;
+import com.oc.liza.kinedepoche.models.Exercise;
 import com.oc.liza.kinedepoche.models.ExerciseDate;
 import com.oc.liza.kinedepoche.models.User;
 
@@ -10,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -32,7 +34,7 @@ public class UserDaoTest {
     // FOR DATA
     private UserDatabase database;
 
-    private static ExerciseDate NEW_DATE = new ExerciseDate(USER_ID, USER_ID, "2019-01-01", 20, false, true, false, false, false);
+    private static ExerciseDate NEW_DATE = new ExerciseDate(USER_ID, USER_ID, "2019-01-01", 20, "1");
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
