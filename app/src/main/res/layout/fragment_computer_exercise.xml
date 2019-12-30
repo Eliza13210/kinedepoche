@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,6 +9,7 @@
 
     <!--Navigation exercises-->
     <LinearLayout
+        android:id="@+id/navigation_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/colorPrimary"
@@ -51,43 +51,32 @@
     <!--VIDEO VIEW-->
     <VideoView
         android:id="@+id/exercise_video_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2" />
+         android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/navigation_layout"
+         />
 
     <!--DESCRIPTION EXERCISE-->
     <TextView
         android:id="@+id/description_exercise"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exercise_video_view"
         android:layout_marginStart="4dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="@dimen/_24ssp"
         android:layout_weight="1"
         android:text="DESCRIPTION EXERCISES" />
-
-    <!--PROGRESSBAR-->
-    <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-        android:id="@+id/circular_progress"
-        android:visibility="gone"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        app:direction="clockwise"
-        app:drawDot="false"
-        app:progressBackgroundColor="@color/grey"
-        app:progressBackgroundStrokeWidth="8dp"
-        app:progressColor="@color/colorPrimaryDark"
-        app:progressStrokeWidth="8dp"
-        app:textColor="@color/colorPrimaryDark"
-        app:textSize="16sp" />
 
     <!--TIMER LAYOUT-->
     <include
         layout="@layout/timer_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="@dimen/_100sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/description_exercise"
+        />
 
-</LinearLayout>
+</RelativeLayout>

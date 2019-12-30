@@ -26,6 +26,9 @@ public class ExerciseFragment extends BaseFragment {
     TextView date;
 
     private String todayDate;
+    private long userId=1;
+
+    private Boolean loggedIn = false;
 
     @Override
     public int getLayoutView() {
@@ -36,12 +39,14 @@ public class ExerciseFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        //FOR TESTING ONLY
-        todayDate = Calendar.getInstance().getTime().toString();
-        ExerciseDate createDate = new ExerciseDate(null, 1, todayDate, 20, "1");
-        sharedViewModel.createDate(createDate);
-
-        initClickableImageView();
+        loggedIn = sharedPref.getBoolean("LoggedIn", false);
+        if(loggedIn) {
+            //FOR TESTING ONLY
+            todayDate = Calendar.getInstance().getTime().toString();
+            ExerciseDate createDate = new ExerciseDate(null, userId, todayDate, 20, "1");
+            sharedViewModel.createDate(createDate);
+            initClickableImageView();
+        }
         initDate();
     }
 
@@ -55,7 +60,7 @@ public class ExerciseFragment extends BaseFragment {
 
         //CHECK IF TODAY EXISTS IN DATABASE
         todayDate = Calendar.getInstance().getTime().toString();
-        sharedViewModel.getDate(todayDate).observe(this, this::initProgress);
+        sharedViewModel.getDate(todayDate, userId).observe(this, this::initProgress);
 
         todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
         date.setText(todayDate);

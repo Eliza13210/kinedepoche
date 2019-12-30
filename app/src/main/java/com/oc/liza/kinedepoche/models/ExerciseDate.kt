@@ -13,4 +13,4 @@ class ExerciseDate(@PrimaryKey(autoGenerate = true) val id: Long? = null,
                    var userId: Long,
                    var date: String,
                    var progress: Int = 0,
-                   var completedExercises: String)
+                   var completedExercises: String?)

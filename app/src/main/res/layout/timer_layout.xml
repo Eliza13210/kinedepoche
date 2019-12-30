@@ -78,7 +78,17 @@
                 android:textSize="@dimen/text_size_title" />
 
         </LinearLayout>
-
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_24ssp"
+            android:visibility="gone"
+            android:minHeight="60dp"
+            android:minWidth="220dp" />
 
         <!--BUTTON-->
         <com.google.android.material.button.MaterialButton

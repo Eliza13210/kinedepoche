@@ -56,8 +56,8 @@ public class UserViewModel extends ViewModel {
         return mExerciseDateRepository.getDates(userId);
     }
 
-    public LiveData<ExerciseDate> getDate(String date){
-        return mExerciseDateRepository.getDate(date);
+    public LiveData<ExerciseDate> getDate(String date, long userId) {
+        return mExerciseDateRepository.getDate(date, userId);
     }
 
     public void createDate(ExerciseDate date) {
