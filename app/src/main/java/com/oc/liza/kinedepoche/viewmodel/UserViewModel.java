@@ -64,6 +64,10 @@ public class UserViewModel extends ViewModel {
         executor.execute(() -> mExerciseDateRepository.createDate(date));
     }
 
+    public void updateDate(ExerciseDate date) {
+        executor.execute(() -> mExerciseDateRepository.updateDate(date));
+    }
+
     public void deleteDate(long dateId) {
         executor.execute(() -> mExerciseDateRepository.deleteDate(dateId));
     }

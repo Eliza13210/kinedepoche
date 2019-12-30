@@ -17,7 +17,9 @@ import com.oc.liza.kinedepoche.models.Exercise;
 import com.oc.liza.kinedepoche.models.ExerciseDate;
 import com.oc.liza.kinedepoche.models.User;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,10 +53,18 @@ public class ComputerExerciseFragment extends BaseFragment {
     MaterialButton btn_start;
 
     private ExerciseInitializer initializer;
+
+    private User user;
     private int lastExercise = 0;
+    private boolean isDone = false;
 
     private ExerciseDate exerciseDate;
     private String todayDate;
+    private List<Integer> listInt = new ArrayList<>();
+    private Exercise exercise;
+
+    private String uri;
+    private Uri videoUri;
 
     private int progressBarValue = 0;
     private int timerCount;
@@ -69,24 +79,31 @@ public class ComputerExerciseFragment extends BaseFragment {
         //Hide toolbar
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
 
-        initExercises();
-        initUser();
+        initExercisesAndUser();
         initExerciseDate();
         initNavigation();
         initButton();
     }
 
-    private void initExercises() {
+    private void initExercisesAndUser() {
         initializer = new ExerciseInitializer(getActivity());
         initializer.initExerciseProgram();
+
+        userId = sharedPref.getLong("CurrentUser", 1);
+        sharedViewModel.getUser(userId).observe(this, this::initUser);
+
+        Log.e("exercise", "number of exercises" + initializer.getCount() + " userid " + userId);
     }
 
-    private void initUser() {
-        userId = sharedPref.getLong("CurrentUser", 1);
+    private void initUser(User result) {
+        user = result;
+        Log.e("exercise", "user=" + user.toString());
+
     }
 
     private void initExerciseDate() {
         todayDate = Calendar.getInstance().getTime().toString();
+        //CHECK IF USER HAS STARTED EXERCISES TODAY
         sharedViewModel.getDate(todayDate, userId).observe(this, this::createDate);
     }
 
@@ -96,14 +113,21 @@ public class ComputerExerciseFragment extends BaseFragment {
             updateExercise();
         } else {
             exerciseDate = date;
-            sharedViewModel.getUser(userId).observe(this, this::showExercise);
-        }
-    }
+            //GET COMPLETED EXERCISES
+            if (exerciseDate.getCompletedExercises() != null) {
+                String[] array = exerciseDate.getCompletedExercises().split("");
+                Log.e("exercise", "array lenght= " + array.length + array);
+                //CONVERT TO INT ARRAY
+                for (String s : array) {
+                    listInt.add(Integer.parseInt(s));
+                }
+            }
+            Log.e("exercise", "listint= " + listInt);
+            lastExercise = user.getLast_exercise();
 
-    private void showExercise(User user) {
-        lastExercise = user.getLast_exercise();
-        Log.e("ex", "ex no " + lastExercise);
-        updateExercise();
+            Log.e("ex", "ex no " + lastExercise);
+            updateExercise();
+        }
     }
 
     private void initNavigation() {
@@ -130,13 +154,21 @@ public class ComputerExerciseFragment extends BaseFragment {
     }
 
     private void updateExercise() {
-        Exercise exercise = initializer.getExercise(lastExercise);
+        exercise = initializer.getExercise(lastExercise);
 
         //SET EXERCISE NUMBER IN NAVIGATION
         exerciseNumber.setText(exercise.getNav_text());
 
         //DESCRIPTION
         description.setText(exercise.getDescription());
+        for (int i = 0; i < listInt.size(); i++) {
+            if (listInt.get(i) == lastExercise) {
+                description.setText("DONE \n" + exercise.getDescription());
+                isDone = true;
+            } else {
+                isDone = false;
+            }
+        }
 
         //TIMER
         timerCount = exercise.getTime();
@@ -146,13 +178,11 @@ public class ComputerExerciseFragment extends BaseFragment {
         repeatText.setText(String.valueOf(exercise.getRepeat()));
 
         //SET VIDEO PREVIEW
-
-        String uriPath = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.test;
-
-        Uri videoUri = Uri.parse(uriPath);
+        uri = "android.resource://" + getActivity().getPackageName() + "/";
+        videoUri = Uri.parse(uri + R.raw.test);
         videoView.setVideoURI(videoUri);
-
         videoView.seekTo(1);
+        Log.e("exercise ", videoUri.toString());
     }
 
 
@@ -165,12 +195,12 @@ public class ComputerExerciseFragment extends BaseFragment {
         progressBar.setVisibility(View.VISIBLE);
 
         playVideo();
-        MyAsynchTask myTask = new MyAsynchTask(); // can add params for a constructor if needed
-        myTask.execute();
+        ExerciseAsyncTask startExercise = new ExerciseAsyncTask();
+        startExercise.execute();
 
     }
 
-    private class MyAsynchTask extends AsyncTask<Void, Void, Void> {
+    private class ExerciseAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -192,13 +222,12 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            //do your work here
             while (progressBarValue < 100) {
                 progressBarValue++;
                 if (timerCount > 0 && progressBarValue % 10 == 0) timerCount--;
                 publishProgress();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(exercise.getTime() * 10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -210,15 +239,15 @@ public class ComputerExerciseFragment extends BaseFragment {
         protected void onPostExecute(Void result) {
             btn_start.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
-            progressBarValue=0;
+            progressBarValue = 0;
+            timerCount = exercise.getTime();
             updateExerciseDate();
         }
     }
 
     private void playVideo() {
-        String uriPath = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.test;
 
-        Uri videoUri = Uri.parse(uriPath);
+        Uri videoUri = Uri.parse(uri + R.raw.test);
 
         MediaController mc = new MediaController(getActivity());
         mc.setVisibility(View.GONE);
@@ -229,14 +258,21 @@ public class ComputerExerciseFragment extends BaseFragment {
         videoView.setVideoURI(videoUri);
 
         videoView.start();
-
-
     }
 
-    private void updateExerciseDate() {//UPDATE LAST EXERCISE USER
+    private void updateExerciseDate() {
+        //UPDATE LAST EXERCISE USER
+        if (lastExercise < initializer.getCount()) user.setLast_exercise(lastExercise);
+        sharedViewModel.updateUser(user);
 
-        //UPDATE EXERCISE DATE BOOLEAN CORRESPONDING EXERCISE
-        //CHANGE EXERCISE FROM DATABASE
+        //CHECK IF EXERCISE IS ALREADY DONE TODAY
+        if (!isDone) {
+            listInt.add(lastExercise);
+            exerciseDate.setCompletedExercises(String.valueOf(listInt));
+            int progress = exerciseDate.getProgress() + 100 / initializer.getCount();
+            exerciseDate.setProgress(progress);
+            sharedViewModel.updateDate(exerciseDate);
+        }
     }
 
     @Override

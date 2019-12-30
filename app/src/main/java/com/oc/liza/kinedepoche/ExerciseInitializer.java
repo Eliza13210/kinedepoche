@@ -17,7 +17,7 @@ public class ExerciseInitializer {
     private int[] listOfRepeat;
 
     private List<Exercise> listOfExercises;
-    private int numberOfExercises=5;
+    private int numberOfExercises = 5;
 
     public ExerciseInitializer(Activity callingActivity) {
         this.activity = callingActivity;
@@ -35,7 +35,7 @@ public class ExerciseInitializer {
     public void initExerciseProgram() {
         listOfExercises = new ArrayList<>();
         for (int i = 0; i < numberOfExercises; i++) {
-            Exercise exercise = new Exercise(i, listOfVideos[i], listOfDescription[i], listOfNavText[i], listOfTime[i], listOfRepeat[i]);
+            Exercise exercise = new Exercise(i, listOfVideos[i], listOfDescription[i], listOfNavText[i], listOfTime[i], listOfRepeat[i], false);
             listOfExercises.add(exercise);
         }
     }
