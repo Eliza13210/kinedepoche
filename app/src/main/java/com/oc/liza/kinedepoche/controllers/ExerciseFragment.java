@@ -1,6 +1,5 @@
 package com.oc.liza.kinedepoche.controllers;
 
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -8,9 +7,7 @@ import com.oc.liza.kinedepoche.R;
 import com.oc.liza.kinedepoche.Utils;
 import com.oc.liza.kinedepoche.models.ExerciseDate;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 
 import androidx.navigation.Navigation;
@@ -38,15 +35,8 @@ public class ExerciseFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         loggedIn = sharedPref.getBoolean("LoggedIn", false);
         userId = sharedPref.getLong("CurrentUser", 1);
-
         if (loggedIn) {
             initClickableImageView();
         }
@@ -54,9 +44,8 @@ public class ExerciseFragment extends BaseFragment {
     }
 
     private void initClickableImageView() {
-        ImageView exercise = Objects.requireNonNull(getView()).findViewById(R.id.desk_exercises_image);
-        exercise.setClickable(true);
-        exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
+        exerciseImageView.setClickable(true);
+        exerciseImageView.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
     }
 
     private void initDate() {

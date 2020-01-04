@@ -1,13 +1,9 @@
 package com.oc.liza.kinedepoche.controllers;
 
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -26,10 +22,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ComputerExerciseFragment extends BaseFragment {
 
@@ -75,7 +69,6 @@ public class ComputerExerciseFragment extends BaseFragment {
 
     private int progressBarValue = 0;
     private int timerCount;
-    private boolean isDone = false;
 
     public ComputerExerciseFragment() {
         // Required empty public constructor
@@ -93,6 +86,7 @@ public class ComputerExerciseFragment extends BaseFragment {
         initNavigation();
         initButton();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -252,9 +246,6 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Void result) {
-
-            Log.e("post", "postexecute");
-            isDone = true;
             btn_start.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
             navigationPossible = true;
@@ -302,10 +293,7 @@ public class ComputerExerciseFragment extends BaseFragment {
 
             Log.e("update", "last ex=" + lastExercise + "progress=" + exerciseDate.getProgress());
         }
-        isDone=false;
     }
-
-
 
 
     @Override

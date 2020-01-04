@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.oc.liza.kinedepoche.injections.Injection;
-import com.oc.liza.kinedepoche.injections.ViewModelFactory;
 import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 
 import androidx.annotation.NonNull;
@@ -32,19 +30,11 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
     public abstract int getLayoutView();
 
     public abstract void initView();
 
     private void initViewModel() {
-
         sharedViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
     }
 }

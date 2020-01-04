@@ -39,6 +39,9 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.btn_save)
     MaterialButton buttonSave;
 
+    @BindView(R.id.program)
+    ImageView exercise;
+
     private Boolean loggedIn = false;
     private String message = "";
     private String userName;
@@ -54,18 +57,10 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
         loggedIn = sharedPref.getBoolean("LoggedIn", false);
         if (!loggedIn) {
             userFrameLayout.setVisibility(View.GONE);
             firstTimeUserLayout.setVisibility(View.VISIBLE);
-
             buttonSave.setOnClickListener(v -> logInWithUserName());
         } else {
             updateWelcomeMessage();
@@ -121,7 +116,6 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initClickableImage() {
-        ImageView exercise = Objects.requireNonNull(getView()).findViewById(R.id.program);
         exercise.setClickable(true);
         exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
     }
