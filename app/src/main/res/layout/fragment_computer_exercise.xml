@@ -59,15 +59,19 @@
          />
 
     <!--DESCRIPTION EXERCISE-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/exercise_video_view"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/description_exercise"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/exercise_video_view"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginStart="4dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="@dimen/_24ssp"
-        android:layout_weight="1"
         android:text="DESCRIPTION EXERCISES" />
 
     <!--TIMER LAYOUT-->
@@ -78,5 +82,5 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/description_exercise"
         />
-
+    </LinearLayout>
 </RelativeLayout>

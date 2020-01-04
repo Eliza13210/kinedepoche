@@ -8,6 +8,7 @@ import com.oc.liza.kinedepoche.R;
 import com.oc.liza.kinedepoche.Utils;
 import com.oc.liza.kinedepoche.models.ExerciseDate;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class ExerciseFragment extends BaseFragment {
     TextView date;
 
     private String todayDate;
-    private long userId=1;
+    private long userId;
 
     private Boolean loggedIn = false;
 
@@ -36,15 +37,17 @@ public class ExerciseFragment extends BaseFragment {
     }
 
     @Override
+    public void initView() {
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-
         loggedIn = sharedPref.getBoolean("LoggedIn", false);
-        if(loggedIn) {
-            //FOR TESTING ONLY
-            todayDate = Calendar.getInstance().getTime().toString();
-            ExerciseDate createDate = new ExerciseDate(null, userId, todayDate, 20, "1");
-            sharedViewModel.createDate(createDate);
+        userId = sharedPref.getLong("CurrentUser", 1);
+
+        if (loggedIn) {
             initClickableImageView();
         }
         initDate();
@@ -59,38 +62,18 @@ public class ExerciseFragment extends BaseFragment {
     private void initDate() {
 
         //CHECK IF TODAY EXISTS IN DATABASE
-        todayDate = Calendar.getInstance().getTime().toString();
+        todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
         sharedViewModel.getDate(todayDate, userId).observe(this, this::initProgress);
 
         todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
         date.setText(todayDate);
     }
 
-    private void initProgress(ExerciseDate exerciseDate){
+    private void initProgress(ExerciseDate exerciseDate) {
         if (exerciseDate != null) {
             circularProgress.setCurrentProgress(exerciseDate.getProgress());
         } else {
             circularProgress.setCurrentProgress(0);
         }
     }
-
-    /**
-    private void initUser() {
-        userId = sharedPref.getLong("CurrentUser", 100);
-        Log.e("exercise", "userId " + userId);
-        sharedViewModel.getDates(userId).observe(this, this::showProgress);
-    }
-
-    private void showProgress(List<ExerciseDate> listDates) {
-        Log.e("exercise", "list dates " + listDates.size());
-        //SHOW TODAY PROGRESS IN EXERCISE PROGRAM
-        for (int i = 0; i < listDates.size(); i++) {
-            if (todayDate.equals(listDates.get(i).getDate())) {
-                circularProgress.setCurrentProgress(listDates.get(i).getProgress());
-                sharedPref.edit().putInt("TodayProgress", 0).apply();
-            } else {
-                circularProgress.setProgress(0, 100);
-            }
-        }
-    }**/
 }

@@ -1,9 +1,13 @@
 package com.oc.liza.kinedepoche.controllers;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -13,17 +17,19 @@ import android.widget.VideoView;
 import com.google.android.material.button.MaterialButton;
 import com.oc.liza.kinedepoche.ExerciseInitializer;
 import com.oc.liza.kinedepoche.R;
+import com.oc.liza.kinedepoche.Utils;
 import com.oc.liza.kinedepoche.models.Exercise;
 import com.oc.liza.kinedepoche.models.ExerciseDate;
 import com.oc.liza.kinedepoche.models.User;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ComputerExerciseFragment extends BaseFragment {
 
@@ -56,33 +62,42 @@ public class ComputerExerciseFragment extends BaseFragment {
 
     private User user;
     private int lastExercise = 0;
-    private boolean isDone = false;
+    private boolean navigationPossible = true;
 
     private ExerciseDate exerciseDate;
     private String todayDate;
-    private List<Integer> listInt = new ArrayList<>();
+
     private Exercise exercise;
+    private List<Exercise> listOfExercise;
 
     private String uri;
     private Uri videoUri;
 
     private int progressBarValue = 0;
     private int timerCount;
+    private boolean isDone = false;
 
     public ComputerExerciseFragment() {
         // Required empty public constructor
     }
 
     @Override
+    public int getLayoutView() {
+        return R.layout.fragment_computer_exercise;
+    }
+
+    @Override
+    public void initView() {
+        Log.e("initview", "called");
+        initExercisesAndUser();
+        initNavigation();
+        initButton();
+    }
+    @Override
     public void onResume() {
         super.onResume();
         //Hide toolbar
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
-
-        initExercisesAndUser();
-        initExerciseDate();
-        initNavigation();
-        initButton();
     }
 
     private void initExercisesAndUser() {
@@ -91,43 +106,49 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         userId = sharedPref.getLong("CurrentUser", 1);
         sharedViewModel.getUser(userId).observe(this, this::initUser);
-
-        Log.e("exercise", "number of exercises" + initializer.getCount() + " userid " + userId);
     }
 
     private void initUser(User result) {
         user = result;
-        Log.e("exercise", "user=" + user.toString());
-
+        initExerciseDate();
     }
 
     private void initExerciseDate() {
-        todayDate = Calendar.getInstance().getTime().toString();
+        todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
         //CHECK IF USER HAS STARTED EXERCISES TODAY
         sharedViewModel.getDate(todayDate, userId).observe(this, this::createDate);
     }
 
     private void createDate(ExerciseDate date) {
         if (date == null) {
-            exerciseDate = new ExerciseDate(null, userId, todayDate, 0, null);
-            updateExercise();
+            //IF EXERCISE DATE DOESN'T EXIST IN DATABASE, CREATE ONE FOR TODAY
+            user.setLast_exercise(0);
+            sharedViewModel.updateUser(user);
+            Log.e("ex", "date is null and last ex=" + lastExercise);
+
+            exerciseDate = new ExerciseDate(null, userId, todayDate, 0);
+            sharedViewModel.createDate(exerciseDate);
         } else {
             exerciseDate = date;
-            //GET COMPLETED EXERCISES
-            if (exerciseDate.getCompletedExercises() != null) {
-                String[] array = exerciseDate.getCompletedExercises().split("");
-                Log.e("exercise", "array lenght= " + array.length + array);
-                //CONVERT TO INT ARRAY
-                for (String s : array) {
-                    listInt.add(Integer.parseInt(s));
-                }
-            }
-            Log.e("exercise", "listint= " + listInt);
+            Log.e("ex", "date is NOT null" + date.getDate());
             lastExercise = user.getLast_exercise();
-
-            Log.e("ex", "ex no " + lastExercise);
-            updateExercise();
+            Log.e("last ex", "is" + lastExercise);
+            sharedViewModel.getExercisesByDate(exerciseDate.getId()).observe(this, this::addToList);
         }
+    }
+
+    private void addToList(List<Exercise> list) {
+        if (list.isEmpty()) {
+            //CREATE EXERCISES FOR TODAY IN DATABASE
+            listOfExercise = initializer.getListOfExercises();
+            initializer.addExercisesToDatabase(sharedViewModel, listOfExercise, exerciseDate.getId());
+            Log.e("create", "id=" + exerciseDate.getId());
+        } else {
+            listOfExercise = list;
+        }
+        Log.e("ex", "list of  ex " + list.size());
+
+        updateExercise();
     }
 
     private void initNavigation() {
@@ -136,38 +157,37 @@ public class ComputerExerciseFragment extends BaseFragment {
     }
 
     private void clickLeft() {
-        if (lastExercise > 0) {
-            lastExercise--;
-        } else {
-            lastExercise = initializer.getCount() - 1;
+        if (navigationPossible) {
+            if (lastExercise > 0) {
+                lastExercise--;
+            } else {
+                lastExercise = listOfExercise.size() - 1;
+            }
+            updateExercise();
         }
-        updateExercise();
     }
 
     private void clickRight() {
-        if (lastExercise < initializer.getCount() - 1) {
-            lastExercise++;
-        } else {
-            lastExercise = 0;
+        if (navigationPossible) {
+            if (lastExercise < listOfExercise.size() - 1) {
+                lastExercise++;
+            } else {
+                lastExercise = 0;
+            }
+            updateExercise();
         }
-        updateExercise();
     }
 
     private void updateExercise() {
-        exercise = initializer.getExercise(lastExercise);
+        exercise = listOfExercise.get(lastExercise);
 
         //SET EXERCISE NUMBER IN NAVIGATION
         exerciseNumber.setText(exercise.getNav_text());
 
         //DESCRIPTION
         description.setText(exercise.getDescription());
-        for (int i = 0; i < listInt.size(); i++) {
-            if (listInt.get(i) == lastExercise) {
-                description.setText("DONE \n" + exercise.getDescription());
-                isDone = true;
-            } else {
-                isDone = false;
-            }
+        if (exercise.getCompleted()) {
+            description.setText("DONE \n" + exercise.getDescription());
         }
 
         //TIMER
@@ -179,7 +199,10 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         //SET VIDEO PREVIEW
         uri = "android.resource://" + getActivity().getPackageName() + "/";
-        videoUri = Uri.parse(uri + R.raw.test);
+
+        int raw = getResources().getIdentifier(exercise.getUrl(), "raw", getActivity().getPackageName());
+
+        videoUri = Uri.parse(uri + raw);
         videoView.setVideoURI(videoUri);
         videoView.seekTo(1);
         Log.e("exercise ", videoUri.toString());
@@ -197,25 +220,17 @@ public class ComputerExerciseFragment extends BaseFragment {
         playVideo();
         ExerciseAsyncTask startExercise = new ExerciseAsyncTask();
         startExercise.execute();
-
     }
 
     private class ExerciseAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
-            /*
-             *    do things before doInBackground() code runs
-             *    such as preparing and showing a Dialog or ProgressBar
-             */
+            navigationPossible = false;
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
-            /*
-             *    updating data
-             *    such a Dialog or ProgressBar
-             */
             progressBar.setProgress(progressBarValue);
             timerText.setText(String.valueOf(timerCount));
         }
@@ -237,11 +252,15 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Void result) {
+
+            Log.e("post", "postexecute");
+            isDone = true;
             btn_start.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
+            navigationPossible = true;
             progressBarValue = 0;
             timerCount = exercise.getTime();
-            updateExerciseDate();
+            timerText.setText(String.valueOf(timerCount));
         }
     }
 
@@ -258,27 +277,36 @@ public class ComputerExerciseFragment extends BaseFragment {
         videoView.setVideoURI(videoUri);
 
         videoView.start();
+        videoView.setOnCompletionListener(mp -> {
+            // Video Playing is completed
+            updateExerciseDate();
+        });
     }
 
     private void updateExerciseDate() {
+
+        Log.e("update", "updated");
         //UPDATE LAST EXERCISE USER
-        if (lastExercise < initializer.getCount()) user.setLast_exercise(lastExercise);
+        user.setLast_exercise(lastExercise);
         sharedViewModel.updateUser(user);
 
-        //CHECK IF EXERCISE IS ALREADY DONE TODAY
-        if (!isDone) {
-            listInt.add(lastExercise);
-            exerciseDate.setCompletedExercises(String.valueOf(listInt));
-            int progress = exerciseDate.getProgress() + 100 / initializer.getCount();
+        //UPDATE EXERCISE AND PROGRESS IF NOT ALREADY COMPLETED
+        if (!exercise.getCompleted()) {
+            exercise.setCompleted(true);
+            sharedViewModel.updateExercise(exercise);
+
+            //UPDATE TODAY DATE PROGRESS
+            int progress = exerciseDate.getProgress() + 100 / listOfExercise.size();
             exerciseDate.setProgress(progress);
             sharedViewModel.updateDate(exerciseDate);
+
+            Log.e("update", "last ex=" + lastExercise + "progress=" + exerciseDate.getProgress());
         }
+        isDone=false;
     }
 
-    @Override
-    public int getLayoutView() {
-        return R.layout.fragment_computer_exercise;
-    }
+
+
 
     @Override
     public void onPause() {

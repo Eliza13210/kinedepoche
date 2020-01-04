@@ -2,6 +2,7 @@ package com.oc.liza.kinedepoche.viewmodel.repositories
 
 import androidx.lifecycle.LiveData
 import com.oc.liza.kinedepoche.database.dao.DateDao
+import com.oc.liza.kinedepoche.models.Exercise
 import com.oc.liza.kinedepoche.models.ExerciseDate
 
 class ExerciseDateRepository(val dateDao: DateDao) {

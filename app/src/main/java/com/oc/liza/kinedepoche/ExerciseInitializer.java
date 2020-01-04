@@ -3,6 +3,7 @@ package com.oc.liza.kinedepoche;
 import android.app.Activity;
 
 import com.oc.liza.kinedepoche.models.Exercise;
+import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +36,25 @@ public class ExerciseInitializer {
     public void initExerciseProgram() {
         listOfExercises = new ArrayList<>();
         for (int i = 0; i < numberOfExercises; i++) {
-            Exercise exercise = new Exercise(i, listOfVideos[i], listOfDescription[i], listOfNavText[i], listOfTime[i], listOfRepeat[i], false);
+            Exercise exercise = new Exercise((long) i, null, listOfVideos[i], listOfDescription[i], listOfNavText[i],
+                    listOfTime[i], listOfRepeat[i], false);
             listOfExercises.add(exercise);
         }
     }
 
-    public Exercise getExercise(int number) {
-        return listOfExercises.get(number);
+    public List<Exercise> getListOfExercises() {
+        return this.listOfExercises;
+    }
+
+    public Exercise getExercise(int id) {
+        return listOfExercises.get(id);
+    }
+
+    public void addExercisesToDatabase(UserViewModel viewModel, List<Exercise> list, long dateId) {
+        for (Exercise exercise : list) {
+            exercise.setDateId(dateId);
+        }
+        viewModel.insertListOfExercises(list);
     }
 
     public int getCount() {

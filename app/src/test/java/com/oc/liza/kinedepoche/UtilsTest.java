@@ -6,13 +6,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
 public class UtilsTest {
 
     private Date date;
+    private List<Integer> listInt;
 
     @Before
     public void setUp() {
@@ -24,6 +27,32 @@ public class UtilsTest {
         String expectedValue = "01/01/1970";
 
         assertEquals(expectedValue, value);
+    }
+
+    @Test
+    public void convertToListOfInt(){
+        String toBeConverted="123";
+        int expectedValue= 1;
+        int value;
+
+        listInt=Utils.convertToListOfInt(toBeConverted);
+        value=listInt.get(0);
+        assertEquals(expectedValue,value);
+
+    }
+
+    @Test
+    public void convertListOfIntToString(){
+
+        String expectedValue="123";
+        listInt=new ArrayList<>();
+        listInt.add(1);
+        listInt.add(2);
+        listInt.add(3);
+        String value=Utils.convertToString(listInt);
+
+
+        assertEquals(expectedValue,value);
     }
 
 }

@@ -26,6 +26,9 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutView(), container, false);
         ButterKnife.bind(this, view);
+        initViewModel();
+        sharedPref = getActivity().getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
+        initView();
         return view;
     }
 
@@ -33,11 +36,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initViewModel();
-        sharedPref = getActivity().getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
+
     }
 
     public abstract int getLayoutView();
+
+    public abstract void initView();
 
     private void initViewModel() {
 
