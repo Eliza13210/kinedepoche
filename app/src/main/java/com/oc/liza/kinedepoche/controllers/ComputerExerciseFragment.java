@@ -70,6 +70,8 @@ public class ComputerExerciseFragment extends BaseFragment {
     private int progressBarValue = 0;
     private int timerCount;
 
+    private ExerciseAsyncTask startExercise;
+
     public ComputerExerciseFragment() {
         // Required empty public constructor
     }
@@ -205,6 +207,18 @@ public class ComputerExerciseFragment extends BaseFragment {
 
     private void initButton() {
         btn_start.setOnClickListener(v -> startTimer());
+        pauseIcon.setOnClickListener(v -> pauseVideo());
+    }
+
+    private void pauseVideo() {
+        if (videoView.isPlaying()) {
+            videoView.pause();
+            pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
+        } else {
+            startTimer();
+            pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
+
+        }
     }
 
     private void startTimer() {
@@ -212,7 +226,7 @@ public class ComputerExerciseFragment extends BaseFragment {
         progressBar.setVisibility(View.VISIBLE);
 
         playVideo();
-        ExerciseAsyncTask startExercise = new ExerciseAsyncTask();
+        startExercise = new ExerciseAsyncTask();
         startExercise.execute();
     }
 
@@ -299,6 +313,7 @@ public class ComputerExerciseFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
+        if (videoView.isPlaying()) videoView.pause();
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 }

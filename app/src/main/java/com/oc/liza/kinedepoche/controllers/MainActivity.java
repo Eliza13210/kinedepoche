@@ -1,5 +1,10 @@
 package com.oc.liza.kinedepoche.controllers;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+
+    public static final String CHANNEL_ID = "NOTIFICATION CHANNEL";
     private boolean tablet = false;
     private NavHostFragment host;
-    public String userName;
     public UserViewModel viewModel;
 
 
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         checkIfTablet();
         initToolbar();
         initViewModel();
+        createNotificationChannel();
     }
 
     private void initViewModel(){
@@ -117,6 +124,27 @@ public class MainActivity extends AppCompatActivity {
         TextView user_email = navView.findViewById(R.id.user_email);
 
         //Set photo
+
+    }
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+        }
+        //Save the Channel Id in shared preferences
+        SharedPreferences preferences = getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString("CHANNEL_KEY", CHANNEL_ID).apply();
 
     }
 

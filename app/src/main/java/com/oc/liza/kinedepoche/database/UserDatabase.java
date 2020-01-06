@@ -2,7 +2,6 @@ package com.oc.liza.kinedepoche.database;
 
 import android.content.Context;
 
-import com.oc.liza.kinedepoche.Converters;
 import com.oc.liza.kinedepoche.database.dao.DateDao;
 import com.oc.liza.kinedepoche.database.dao.ExerciseDao;
 import com.oc.liza.kinedepoche.database.dao.UserDao;
@@ -13,10 +12,8 @@ import com.oc.liza.kinedepoche.models.User;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 
 @Database(entities = {User.class, ExerciseDate.class, Exercise.class}, version = 1, exportSchema = false)
-@TypeConverters({Converters.class})
 public abstract class UserDatabase extends RoomDatabase {
 
     // --- SINGLETON ---
