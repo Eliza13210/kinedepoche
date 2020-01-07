@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="The graph shows you the last 7 days, measured in percentage of completed program." />
+        android:text="@string/description_statistics" />
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph"

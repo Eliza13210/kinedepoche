@@ -19,6 +19,11 @@ public class Utils {
         return dateFormat.format(date);
     }
 
+    public static String getSimpleDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        return dateFormat.format(date);
+    }
+
     public static List<Integer> convertToListOfInt(String string){
         List<Integer> listInt;
 
