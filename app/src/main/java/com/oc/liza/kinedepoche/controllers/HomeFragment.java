@@ -39,6 +39,8 @@ public class HomeFragment extends BaseFragment {
 
     @BindView(R.id.program)
     ImageView exercise;
+    @BindView(R.id.fragment_home)
+    LinearLayout fragmentLayout;
 
     private Boolean loggedIn = false;
     private String message = "";
@@ -101,6 +103,8 @@ public class HomeFragment extends BaseFragment {
             Log.e("home", "create user " + userName);
         }
 
+        fragmentLayout.setBackgroundColor(getActivity().getResources().getColor(R.color.white));
+
         userName = sharedPref.getString("CurrentUserName", null);
         message = "Welcome " + userName + "!";
         welcomeTextView.setText(message);
@@ -115,6 +119,6 @@ public class HomeFragment extends BaseFragment {
     private void initClickableImage() {
         exercise.setClickable(true);
         exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
-        Log.e("main", "userId="+sharedPref.getLong("CurrentUser", 100));
+        Log.e("main", "userId=" + sharedPref.getLong("CurrentUser", 100));
     }
 }

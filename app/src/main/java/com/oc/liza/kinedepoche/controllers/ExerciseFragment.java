@@ -1,7 +1,9 @@
 package com.oc.liza.kinedepoche.controllers;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.oc.liza.kinedepoche.R;
@@ -23,6 +25,8 @@ public class ExerciseFragment extends BaseFragment {
     CircularProgressIndicator circularProgress;
     @BindView(R.id.date)
     TextView date;
+    @BindView(R.id.trophy)
+    LinearLayout trophy;
 
     private String todayDate;
 
@@ -60,7 +64,11 @@ public class ExerciseFragment extends BaseFragment {
     private void initProgress(ExerciseDate exerciseDate) {
         if (exerciseDate != null) {
             circularProgress.setCurrentProgress(exerciseDate.getProgress());
+            if(exerciseDate.getProgress()==100){
+                trophy.setVisibility(View.VISIBLE);
+            }
         } else {
+            trophy.setVisibility(View.GONE);
             circularProgress.setCurrentProgress(0);
         }
     }
