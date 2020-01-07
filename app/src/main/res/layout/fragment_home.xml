@@ -34,10 +34,10 @@
             <ImageView
                 android:id="@+id/program"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_184sdp"
                 android:contentDescription="@string/current_program"
                 android:scaleType="centerCrop"
-                android:src="@drawable/exo" />
+                android:src="@drawable/photo_computer" />
 
             <TextView
                 android:layout_width="match_parent"
