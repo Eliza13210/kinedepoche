@@ -12,12 +12,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.oc.liza.kinedepoche.R;
 import com.oc.liza.kinedepoche.models.User;
-import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 
 import java.util.List;
 import java.util.Objects;
 
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 

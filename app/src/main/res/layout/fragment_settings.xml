@@ -15,6 +15,14 @@
         android:layout_marginBottom="8dp"
         android:text="@string/profile"
         android:textSize="@dimen/title_big" />
+    <TextView
+        android:id="@+id/not_logged_in"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="italic|bold"
+        android:textSize="@dimen/_15sdp"
+        android:text="@string/you_need_to_log_in_first"/>
 
     <!-- USER NAME-->
     <LinearLayout
@@ -46,6 +54,18 @@
         android:layout_marginTop="4dp"
         android:padding="4dp"
         android:text="@string/update"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button" />
+
+    <!--BUTTON-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_logout"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="4dp"
+        android:padding="4dp"
+        android:text="@string/log_out"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button" />
 
     <View
