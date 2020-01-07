@@ -57,7 +57,7 @@
                 <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
                     android:id="@+id/circular_progress"
                     android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     app:direction="clockwise"
                     app:drawDot="false"

@@ -99,8 +99,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     private void initExercisesAndUser() {
         initializer = new ExerciseInitializer(getActivity());
         initializer.initExerciseProgram();
-
-        userId = sharedPref.getLong("CurrentUser", 1);
         sharedViewModel.getUser(userId).observe(this, this::initUser);
     }
 
@@ -126,7 +124,7 @@ public class ComputerExerciseFragment extends BaseFragment {
             sharedViewModel.createDate(exerciseDate);
         } else {
             exerciseDate = date;
-            Log.e("ex", "date is NOT null" + date.getDate());
+            Log.e("ex", "date is NOT null and progress=" + date.getProgress()+"userId="+userId+"date="+todayDate);
             lastExercise = user.getLast_exercise();
             Log.e("last ex", "is" + lastExercise);
             sharedViewModel.getExercisesByDate(exerciseDate.getId()).observe(this, this::addToList);
@@ -214,6 +212,9 @@ public class ComputerExerciseFragment extends BaseFragment {
         if (videoView.isPlaying()) {
             videoView.pause();
             pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
+
+            //PAUSE PROGRESS AND TIMER COUNT!
+
         } else {
             startTimer();
             pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);

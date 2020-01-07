@@ -69,7 +69,6 @@ public class HomeFragment extends BaseFragment {
 
     private void logInWithUserName() {
         if (!Objects.requireNonNull(userNameInput.getText()).toString().isEmpty()) {
-            sharedViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
             sharedViewModel.getAllUsers().observe(this, this::checkIfUserExists);
         } else {
             Toast.makeText(getActivity(), "Please choose a user name", Toast.LENGTH_SHORT).show();
@@ -118,5 +117,6 @@ public class HomeFragment extends BaseFragment {
     private void initClickableImage() {
         exercise.setClickable(true);
         exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
+        Log.e("main", "userId="+sharedPref.getLong("CurrentUser", 100));
     }
 }

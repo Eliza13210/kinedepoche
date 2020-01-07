@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected long userId = 0;
+    protected long userId;
     protected SharedPreferences sharedPref;
     protected UserViewModel sharedViewModel;
 
@@ -25,9 +25,14 @@ public abstract class BaseFragment extends Fragment {
         View view = inflater.inflate(getLayoutView(), container, false);
         ButterKnife.bind(this, view);
         initViewModel();
-        sharedPref = getActivity().getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
+        initUser();
         initView();
         return view;
+    }
+
+    private void initUser() {
+        sharedPref = getActivity().getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
+        userId = sharedPref.getLong("CurrentUser", 0);
     }
 
     public abstract int getLayoutView();

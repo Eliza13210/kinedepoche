@@ -1,5 +1,6 @@
 package com.oc.liza.kinedepoche.controllers;
 
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +25,6 @@ public class ExerciseFragment extends BaseFragment {
     TextView date;
 
     private String todayDate;
-    private long userId;
 
     private Boolean loggedIn = false;
 
@@ -36,7 +36,6 @@ public class ExerciseFragment extends BaseFragment {
     @Override
     public void initView() {
         loggedIn = sharedPref.getBoolean("LoggedIn", false);
-        userId = sharedPref.getLong("CurrentUser", 1);
         if (loggedIn) {
             initClickableImageView();
         }
@@ -54,8 +53,8 @@ public class ExerciseFragment extends BaseFragment {
         todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
         sharedViewModel.getDate(todayDate, userId).observe(this, this::initProgress);
 
-        todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
-        date.setText(todayDate);
+        Log.e("initDte", "date " +"userId="+userId+"date="+todayDate);
+         date.setText(todayDate);
     }
 
     private void initProgress(ExerciseDate exerciseDate) {

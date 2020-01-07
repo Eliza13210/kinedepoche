@@ -1,7 +1,6 @@
 package com.oc.liza.kinedepoche.controllers;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -11,12 +10,10 @@ import com.oc.liza.kinedepoche.NotifyWorker;
 import com.oc.liza.kinedepoche.R;
 import com.oc.liza.kinedepoche.models.User;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import androidx.work.Constraints;
-import androidx.work.Data;
 import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import butterknife.BindView;
@@ -32,7 +29,7 @@ public class SettingsFragment extends BaseFragment {
 
     private User user;
 
-    public static final String workTag = "notificationWork";
+    private static final String workTag = "notificationWork";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -75,11 +72,10 @@ public class SettingsFragment extends BaseFragment {
             sharedPref.edit().putBoolean("SwitchIsChecked", true).apply();
 
             PeriodicWorkRequest.Builder notificationBuilder =
-                    new PeriodicWorkRequest.Builder(NotifyWorker.class, 1, TimeUnit.DAYS);
+                    new PeriodicWorkRequest.Builder(NotifyWorker.class, 15, TimeUnit.MINUTES);
             PeriodicWorkRequest request = notificationBuilder.build();
-            WorkManager.getInstance(getActivity()).enqueueUniquePeriodicWork(workTag, ExistingPeriodicWorkPolicy.REPLACE, request);
+            WorkManager.getInstance(Objects.requireNonNull(getActivity())).enqueueUniquePeriodicWork(workTag, ExistingPeriodicWorkPolicy.REPLACE, request);
         } else {
-
             Log.e("settings", "cancel notification");
             sharedPref.edit().putBoolean("SwitchIsChecked", false).apply();
             cancelNotification();
@@ -87,6 +83,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void cancelNotification() {
-        WorkManager.getInstance(getActivity()).cancelAllWorkByTag(workTag);
+        if (getActivity() != null)
+            WorkManager.getInstance(getActivity()).cancelAllWorkByTag(workTag);
     }
 }
