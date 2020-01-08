@@ -1,6 +1,7 @@
 package com.oc.liza.kinedepoche.controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,8 +20,8 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     protected long userId;
-    protected SharedPreferences sharedPref;
-    protected UserViewModel sharedViewModel;
+    SharedPreferences sharedPref;
+    UserViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,8 +34,13 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void initUser() {
-        sharedPref = getActivity().getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
-        userId = sharedPref.getLong("CurrentUser", 0);
+        sharedPref = Objects.requireNonNull(getActivity()).getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
+        boolean loggedIn = sharedPref.getBoolean("LoggedIn", false);
+        if (!loggedIn) {
+            startActivity(new Intent(getActivity(), MainActivity.class));
+        } else {
+            userId = sharedPref.getLong("CurrentUser", 0);
+        }
     }
 
     public abstract int getLayoutView();
@@ -40,6 +48,6 @@ public abstract class BaseFragment extends Fragment {
     public abstract void initView();
 
     private void initViewModel() {
-        sharedViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+        sharedViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(UserViewModel.class);
     }
 }

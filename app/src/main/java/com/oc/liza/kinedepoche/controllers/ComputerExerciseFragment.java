@@ -49,8 +49,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     TextView repeatText;
     @BindView(R.id.ic_pause)
     ImageView pauseIcon;
-    @BindView(R.id.btn_start)
-    MaterialButton btn_start;
 
     private ExerciseInitializer initializer;
 
@@ -72,6 +70,8 @@ public class ComputerExerciseFragment extends BaseFragment {
 
     private ExerciseAsyncTask startExercise;
 
+    private boolean firstClick;
+
     public ComputerExerciseFragment() {
         // Required empty public constructor
     }
@@ -83,7 +83,6 @@ public class ComputerExerciseFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        Log.e("initview", "called");
         initExercisesAndUser();
         initNavigation();
         initButton();
@@ -124,7 +123,7 @@ public class ComputerExerciseFragment extends BaseFragment {
             sharedViewModel.createDate(exerciseDate);
         } else {
             exerciseDate = date;
-            Log.e("ex", "date is NOT null and progress=" + date.getProgress()+"userId="+userId+"date="+todayDate);
+            Log.e("ex", "date is NOT null and progress=" + date.getProgress() + "userId=" + userId + "date=" + todayDate);
             lastExercise = user.getLast_exercise();
             Log.e("last ex", "is" + lastExercise);
             sharedViewModel.getExercisesByDate(exerciseDate.getId()).observe(this, this::addToList);
@@ -204,28 +203,30 @@ public class ComputerExerciseFragment extends BaseFragment {
 
 
     private void initButton() {
-        btn_start.setOnClickListener(v -> startTimer());
         pauseIcon.setOnClickListener(v -> pauseVideo());
     }
 
     private void pauseVideo() {
-        if (videoView.isPlaying()) {
-            videoView.pause();
-            pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
-
-            //PAUSE PROGRESS AND TIMER COUNT!
-
-        } else {
-            startTimer();
+        if (firstClick) {
+            videoView.start();
             pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
-
+            firstClick = false;
+        } else {
+            if (videoView.isPlaying()) {
+                videoView.pause();
+                pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
+                //PAUSE PROGRESS AND TIMER COUNT!
+            } else {
+                if (startExercise == null) {
+                    startTimer();
+                }
+                videoView.start();
+                pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
+            }
         }
     }
 
     private void startTimer() {
-        btn_start.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-
         playVideo();
         startExercise = new ExerciseAsyncTask();
         startExercise.execute();
@@ -261,8 +262,6 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            btn_start.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
             navigationPossible = true;
             progressBarValue = 0;
             timerCount = exercise.getTime();
@@ -285,6 +284,8 @@ public class ComputerExerciseFragment extends BaseFragment {
         videoView.start();
         videoView.setOnCompletionListener(mp -> {
             // Video Playing is completed
+            firstClick=true;
+            pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
             updateExerciseDate();
         });
     }

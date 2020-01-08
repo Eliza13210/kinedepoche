@@ -1,14 +1,12 @@
 package com.oc.liza.kinedepoche.controllers;
 
+import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.oc.liza.kinedepoche.NotifyWorker;
 import com.oc.liza.kinedepoche.R;
@@ -17,14 +15,10 @@ import com.oc.liza.kinedepoche.models.User;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import androidx.navigation.Navigation;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 import butterknife.BindView;
-
-import static androidx.navigation.Navigation.createNavigateOnClickListener;
 
 public class SettingsFragment extends BaseFragment {
 
@@ -36,17 +30,15 @@ public class SettingsFragment extends BaseFragment {
     MaterialButton btnLogOut;
     @BindView(R.id.notification_switch)
     Switch switchNotify;
-    @BindView(R.id.not_logged_in)
-    TextView userNotLoggedIn;
 
     private User user;
+    private String newUserName;
 
     private static final String workTag = "notificationWork";
 
     public SettingsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public int getLayoutView() {
@@ -56,16 +48,12 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public void initView() {
         switchNotify.setChecked(sharedPref.getBoolean("SwitchIsChecked", false));
-        userId = sharedPref.getLong("CurrentUser", 1);
+        userId = sharedPref.getLong("CurrentUser", 100);
         sharedViewModel.getUser(userId).observe(this, this::initUser);
 
-        if (sharedPref.getBoolean("LoggedIn", false)) {
-            btnUpdate.setOnClickListener(v -> updateUserName());
-            btnLogOut.setOnClickListener(v -> logOutUser());
-            switchNotify.setOnClickListener(v -> activateNotification());
-        } else {
-            userNotLoggedIn.setVisibility(View.VISIBLE);
-        }
+        btnUpdate.setOnClickListener(v -> updateUserName());
+        btnLogOut.setOnClickListener(v -> logOutUser());
+        switchNotify.setOnClickListener(v -> activateNotification());
     }
 
     private void initUser(User result) {
@@ -73,20 +61,26 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void updateUserName() {
-        if (inputEditText.getText() != null) {
-            String newUserName = inputEditText.getText().toString();
+        if (!Objects.requireNonNull(inputEditText.getText()).toString().isEmpty()) {
+            newUserName = inputEditText.getText().toString();
+            sharedViewModel.getUserByName(newUserName).observe(Objects.requireNonNull(getActivity()), this::checkIfAlreadyExists);
+        } else {
+            Toast.makeText(getActivity(), "Please enter your new username", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void checkIfAlreadyExists(User result) {
+        if (result == null) {
             user.setName(newUserName);
             sharedViewModel.updateUser(user);
             sharedPref.edit().putString("CurrentUserName", user.getName()).apply();
-        } else {
-            Toast.makeText(getActivity(), "Please enter your new username", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void logOutUser() {
         sharedPref.edit().putBoolean("LoggedIn", false).apply();
         sharedPref.edit().putLong("CurrentUser", 100).apply();
-        Toast.makeText(getActivity(), "You're logged out", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), MainActivity.class));
     }
 
     private void activateNotification() {

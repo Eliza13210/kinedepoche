@@ -15,14 +15,6 @@
         android:layout_marginBottom="8dp"
         android:text="@string/profile"
         android:textSize="@dimen/title_big" />
-    <TextView
-        android:id="@+id/not_logged_in"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="italic|bold"
-        android:textSize="@dimen/_15sdp"
-        android:text="@string/you_need_to_log_in_first"/>
 
     <!-- USER NAME-->
     <LinearLayout

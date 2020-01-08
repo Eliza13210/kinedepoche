@@ -11,7 +11,6 @@ import com.oc.liza.kinedepoche.Utils;
 import com.oc.liza.kinedepoche.models.ExerciseDate;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 import androidx.navigation.Navigation;
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
@@ -28,9 +27,6 @@ public class ExerciseFragment extends BaseFragment {
     @BindView(R.id.trophy)
     LinearLayout trophy;
 
-    private String todayDate;
-
-    private Boolean loggedIn = false;
 
     @Override
     public int getLayoutView() {
@@ -39,10 +35,7 @@ public class ExerciseFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        loggedIn = sharedPref.getBoolean("LoggedIn", false);
-        if (loggedIn) {
-            initClickableImageView();
-        }
+        initClickableImageView();
         initDate();
     }
 
@@ -52,23 +45,23 @@ public class ExerciseFragment extends BaseFragment {
     }
 
     private void initDate() {
-
         //CHECK IF TODAY EXISTS IN DATABASE
-        todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
+        String todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
         sharedViewModel.getDate(todayDate, userId).observe(this, this::initProgress);
 
-        Log.e("initDte", "date " +"userId="+userId+"date="+todayDate);
-         date.setText(todayDate);
+        Log.e("initDte", "date " + "userId=" + userId + "date=" + todayDate);
+        date.setText(todayDate);
     }
 
     private void initProgress(ExerciseDate exerciseDate) {
         if (exerciseDate != null) {
             circularProgress.setCurrentProgress(exerciseDate.getProgress());
-            if(exerciseDate.getProgress()==100){
+            if (exerciseDate.getProgress() == 100) {
                 trophy.setVisibility(View.VISIBLE);
+            } else {
+                trophy.setVisibility(View.GONE);
             }
         } else {
-            trophy.setVisibility(View.GONE);
             circularProgress.setCurrentProgress(0);
         }
     }

@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".controllers.ExerciseFragment">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/exercise_card_view"
         android:layout_width="match_parent"

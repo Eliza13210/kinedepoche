@@ -25,7 +25,6 @@ public class StatisticsFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-
     @Override
     public int getLayoutView() {
         return R.layout.fragment_statistics;
@@ -36,22 +35,20 @@ public class StatisticsFragment extends BaseFragment {
         initGraph();
     }
 
-    private void addToWeekList(ExerciseDate result) {
-        manager.updateDataPoints(result);
-    }
-
     private void initGraph() {
         manager = new StatisticsManager(graphView);
         manager.getWeekProgress();
         manager.initDataPoints();
-        List<Date> listOfDates=manager.getListOfDates();
+        List<Date> listOfDates = manager.getListOfDates();
 
-
-        Log.e("initgraph", "date list="+ listOfDates.size());
+        Log.e("initgraph", "date list=" + listOfDates.size());
         for (Date d : listOfDates) {
-
             sharedViewModel.getDate(Utils.getTodayDate(d), userId).observe(this, this::addToWeekList);
             Log.e("initGraph", "date=" + Utils.getTodayDate(d));
         }
+    }
+
+    private void addToWeekList(ExerciseDate result) {
+        manager.updateDataPoints(result);
     }
 }
