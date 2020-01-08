@@ -214,14 +214,14 @@ public class ComputerExerciseFragment extends BaseFragment {
         } else {
             if (videoView.isPlaying()) {
                 videoView.pause();
-                pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
+                pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
                 //PAUSE PROGRESS AND TIMER COUNT!
             } else {
                 if (startExercise == null) {
                     startTimer();
                 }
                 videoView.start();
-                pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
+                pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
             }
         }
     }
