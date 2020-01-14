@@ -89,7 +89,7 @@ public class SettingsFragment extends BaseFragment {
             sharedPref.edit().putBoolean("SwitchIsChecked", true).apply();
 
             PeriodicWorkRequest.Builder notificationBuilder =
-                    new PeriodicWorkRequest.Builder(NotifyWorker.class, 15, TimeUnit.MINUTES)
+                    new PeriodicWorkRequest.Builder(NotifyWorker.class, 1, TimeUnit.DAYS)
                             .addTag(workTag);
             PeriodicWorkRequest request = notificationBuilder.build();
             WorkManager.getInstance(Objects.requireNonNull(getActivity())).enqueueUniquePeriodicWork("reminder",

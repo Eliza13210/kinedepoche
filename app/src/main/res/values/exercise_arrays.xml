@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="video_url_array">
-        <item>test</item>
+        <item>exo_one</item>
         <item>test</item>
         <item>test</item>
         <item>test</item>
@@ -17,7 +17,9 @@
     </string-array>
 
     <string-array name="description_array">
-        <item>desc1</item>
+        <item>Put your hands behind your neck. Push your elbows as far behind as possible and take a deep breath.
+            Stretch your hands towards the ceiling when holding your breath. Slowly lower your hands and push in front of you while breathing out and
+        round the upper part of your back</item>
         <item>desc2</item>
         <item>desc3</item>
         <item>desc4</item>
@@ -25,7 +27,7 @@
     </string-array>
 
     <integer-array name="time_array">
-        <item>10</item>
+        <item>33</item>
         <item>10</item>
         <item>10</item>
         <item>10</item>
@@ -33,7 +35,7 @@
     </integer-array>
 
     <integer-array name="repeat_array">
-        <item>1</item>
+        <item>3</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>

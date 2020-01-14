@@ -92,6 +92,8 @@ public class StatisticsManager {
         graphView.getViewport().setMinY(0);
         graphView.getViewport().setMaxY(100);
 
+        graphView.getViewport().setYAxisBoundsManual(true);
+
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
 
         List<String> stockList = new ArrayList<>();

@@ -1,7 +1,6 @@
 package com.oc.liza.kinedepoche.controllers;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.google.android.material.button.MaterialButton;
 import com.oc.liza.kinedepoche.ExerciseInitializer;
 import com.oc.liza.kinedepoche.R;
 import com.oc.liza.kinedepoche.Utils;
@@ -21,6 +19,8 @@ import com.oc.liza.kinedepoche.models.User;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -49,7 +49,8 @@ public class ComputerExerciseFragment extends BaseFragment {
     TextView repeatText;
     @BindView(R.id.ic_pause)
     ImageView pauseIcon;
-
+    @BindView(R.id.progressbar_time)
+    TextView progressbar_time_text_view;
     private ExerciseInitializer initializer;
 
     private User user;
@@ -65,12 +66,10 @@ public class ComputerExerciseFragment extends BaseFragment {
     private String uri;
     private Uri videoUri;
 
-    private int progressBarValue = 0;
     private int timerCount;
 
-    private ExerciseAsyncTask startExercise;
-
-    private boolean firstClick;
+    private Timer timer;
+    private boolean firstClick = true;
 
     public ComputerExerciseFragment() {
         // Required empty public constructor
@@ -183,10 +182,6 @@ public class ComputerExerciseFragment extends BaseFragment {
             description.setText("DONE \n" + exercise.getDescription());
         }
 
-        //TIMER
-        timerCount = exercise.getTime();
-        timerText.setText(String.valueOf(timerCount));
-
         //REPEAT
         repeatText.setText(String.valueOf(exercise.getRepeat()));
 
@@ -199,6 +194,15 @@ public class ComputerExerciseFragment extends BaseFragment {
         videoView.setVideoURI(videoUri);
         videoView.seekTo(1);
         Log.e("exercise ", videoUri.toString());
+
+
+        //TIMER
+        timerCount = exercise.getTime();
+        timerText.setText(String.valueOf(timerCount));
+
+        //INIT PROGRESSBAR
+        progressBar.setProgress(0);
+        progressbar_time_text_view.setText(String.valueOf(timerCount));
     }
 
 
@@ -207,19 +211,17 @@ public class ComputerExerciseFragment extends BaseFragment {
     }
 
     private void pauseVideo() {
+        Log.e("first", "click=" + firstClick);
         if (firstClick) {
-            videoView.start();
+            startTimer();
+            //videoView.start();
             pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
             firstClick = false;
         } else {
             if (videoView.isPlaying()) {
                 videoView.pause();
                 pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
-                //PAUSE PROGRESS AND TIMER COUNT!
             } else {
-                if (startExercise == null) {
-                    startTimer();
-                }
                 videoView.start();
                 pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
             }
@@ -228,51 +230,29 @@ public class ComputerExerciseFragment extends BaseFragment {
 
     private void startTimer() {
         playVideo();
-        startExercise = new ExerciseAsyncTask();
-        startExercise.execute();
-    }
+        if (timer == null) {
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    navigationPossible = false;
 
-    private class ExerciseAsyncTask extends AsyncTask<Void, Void, Void> {
+                    final int position = videoView.getCurrentPosition();
+                    final int percentage = Math.round((position * 100 / (videoView.getDuration())));
 
-        @Override
-        protected void onPreExecute() {
-            navigationPossible = false;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            progressBar.setProgress(progressBarValue);
-            timerText.setText(String.valueOf(timerCount));
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            while (progressBarValue < 100) {
-                progressBarValue++;
-                if (timerCount > 0 && progressBarValue % 10 == 0) timerCount--;
-                publishProgress();
-                try {
-                    Thread.sleep(exercise.getTime() * 10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    progressBar.post(() -> progressBar.setProgress(percentage));
+                    progressbar_time_text_view.post(() -> progressbar_time_text_view.setText(String.valueOf(((videoView.getDuration()) - position) / 1000)));
                 }
-            }
-            return null;
+            }, 0, 1000);
         }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            navigationPossible = true;
-            progressBarValue = 0;
-            timerCount = exercise.getTime();
-            timerText.setText(String.valueOf(timerCount));
-        }
+/**       navigationPossible = true;
+ progressBarValue = 0;
+ timerCount = exercise.getTime();
+ timerText.setText(String.valueOf(timerCount));*/
     }
 
     private void playVideo() {
-
-        Uri videoUri = Uri.parse(uri + R.raw.test);
-
         MediaController mc = new MediaController(getActivity());
         mc.setVisibility(View.GONE);
         mc.setAnchorView(videoView);
@@ -284,8 +264,15 @@ public class ComputerExerciseFragment extends BaseFragment {
         videoView.start();
         videoView.setOnCompletionListener(mp -> {
             // Video Playing is completed
-            firstClick=true;
+            firstClick = true;
             pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
+
+            Log.e("run", "canceled");
+            timer.cancel();
+            timer.purge();
+            timer = null;
+            navigationPossible = true;
+            timerCount = videoView.getDuration();
             updateExerciseDate();
         });
     }

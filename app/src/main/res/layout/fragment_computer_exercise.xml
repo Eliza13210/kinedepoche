@@ -51,12 +51,12 @@
     <!--VIDEO VIEW-->
     <VideoView
         android:id="@+id/exercise_video_view"
-         android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_200sdp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/navigation_layout"
-         />
+        />
 
     <!--DESCRIPTION EXERCISE-->
     <LinearLayout
@@ -64,23 +64,23 @@
         android:layout_height="match_parent"
         android:layout_below="@id/exercise_video_view"
         android:orientation="vertical">
-    <TextView
-        android:id="@+id/description_exercise"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="@dimen/_24ssp"
-        android:text="DESCRIPTION EXERCISES" />
+        <TextView
+            android:id="@+id/description_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="@dimen/_24ssp"
+            android:text="DESCRIPTION EXERCISES" />
 
-    <!--TIMER LAYOUT-->
-    <include
-        layout="@layout/timer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/description_exercise"
-        />
+        <!--TIMER LAYOUT-->
+        <include
+            layout="@layout/timer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/description_exercise"
+            />
     </LinearLayout>
 </RelativeLayout>
