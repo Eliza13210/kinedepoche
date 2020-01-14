@@ -3,6 +3,7 @@ package com.oc.liza.kinedepoche.controllers;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -37,6 +38,8 @@ public class ComputerExerciseFragment extends BaseFragment {
     VideoView videoView;
     @BindView(R.id.description_exercise)
     TextView description;
+    @BindView(R.id.description_frame_layout)
+    FrameLayout description_frame_layout;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.ic_timer)
@@ -245,14 +248,10 @@ public class ComputerExerciseFragment extends BaseFragment {
                 }
             }, 0, 1000);
         }
-
-/**       navigationPossible = true;
- progressBarValue = 0;
- timerCount = exercise.getTime();
- timerText.setText(String.valueOf(timerCount));*/
     }
 
     private void playVideo() {
+        description_frame_layout.setVisibility(View.INVISIBLE);
         MediaController mc = new MediaController(getActivity());
         mc.setVisibility(View.GONE);
         mc.setAnchorView(videoView);
@@ -273,6 +272,8 @@ public class ComputerExerciseFragment extends BaseFragment {
             timer = null;
             navigationPossible = true;
             timerCount = videoView.getDuration();
+            description_frame_layout.setVisibility(View.VISIBLE);
+
             updateExerciseDate();
         });
     }

@@ -41,7 +41,7 @@
     <string name="notification_message_body">Time to do your exercises!</string>
     <string name="log_out">Log out</string>
     <string name="you_need_to_log_in_first">You need to log in first</string>
-    <string name="description_statistics">The graph shows you the last 4 days, measured in percentage of completed program.</string>
+    <string name="description_statistics">The graph shows you the last 5 days, measured in percentage of completed program.</string>
     <string name="log_in">Log in</string>
     <string name="exercise_where_ever_you_are">Exercise where ever you are!</string>
 

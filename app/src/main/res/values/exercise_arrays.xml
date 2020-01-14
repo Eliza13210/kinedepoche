@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="video_url_array">
-        <item>exo_one</item>
+        <item>ex_test</item>
         <item>test</item>
         <item>test</item>
         <item>test</item>
