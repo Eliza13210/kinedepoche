@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="video_url_array">
-        <item>ex_test</item>
-        <item>test</item>
-        <item>test</item>
-        <item>test</item>
-        <item>test</item>
+        <item>ex_one</item>
+        <item>ex_two</item>
+        <item>ex_three</item>
+        <item>ex_four</item>
+        <item>ex_five</item>
     </string-array>
 
     <string-array name="exercise_number_array">
@@ -17,28 +17,18 @@
     </string-array>
 
     <string-array name="description_array">
-        <item>Put your hands behind your neck. Push your elbows as far behind as possible and take a deep breath.
-            Stretch your hands towards the ceiling when holding your breath. Slowly lower your hands and push in front of you while breathing out and
-        round the upper part of your back</item>
-        <item>desc2</item>
-        <item>desc3</item>
-        <item>desc4</item>
-        <item>desc5</item>
+        <item>Global stretch for shoulder, scapula and upper body.</item>
+        <item>Rotation trunk.</item>
+        <item>Upper body and arms flexion and extension.</item>
+        <item>Neck mobilization.</item>
+        <item>Hand, wrist and shoulder mobilization.</item>
     </string-array>
 
     <integer-array name="time_array">
         <item>33</item>
-        <item>10</item>
-        <item>10</item>
-        <item>10</item>
-        <item>10</item>
-    </integer-array>
-
-    <integer-array name="repeat_array">
-        <item>3</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
+        <item>39</item>
+        <item>63</item>
+        <item>56</item>
+        <item>83</item>
     </integer-array>
 </resources>

@@ -32,6 +32,8 @@ public class ComputerExerciseFragment extends BaseFragment {
     ImageView iconLeft;
     @BindView(R.id.ic_right)
     ImageView iconRight;
+    @BindView(R.id.done_text_view)
+    TextView doneTextView;
     @BindView(R.id.exercise_number)
     TextView exerciseNumber;
     @BindView(R.id.exercise_video_view)
@@ -46,9 +48,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     ImageView timerIcon;
     @BindView(R.id.timer_text)
     TextView timerText;
-    @BindView(R.id.ic_repeat)
-    ImageView repeatIcon;
-    @BindView(R.id.repeat_text)
     TextView repeatText;
     @BindView(R.id.ic_pause)
     ImageView pauseIcon;
@@ -66,7 +65,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     private Exercise exercise;
     private List<Exercise> listOfExercise;
 
-    private String uri;
     private Uri videoUri;
 
     private int timerCount;
@@ -116,18 +114,15 @@ public class ComputerExerciseFragment extends BaseFragment {
 
     private void createDate(ExerciseDate date) {
         if (date == null) {
-            //IF EXERCISE DATE DOESN'T EXIST IN DATABASE, CREATE ONE FOR TODAY
             user.setLast_exercise(0);
             sharedViewModel.updateUser(user);
-            Log.e("ex", "date is null and last ex=" + lastExercise);
 
+            //IF EXERCISE DATE DOESN'T EXIST IN DATABASE, CREATE ONE FOR TODAY
             exerciseDate = new ExerciseDate(null, userId, todayDate, 0);
             sharedViewModel.createDate(exerciseDate);
         } else {
             exerciseDate = date;
-            Log.e("ex", "date is NOT null and progress=" + date.getProgress() + "userId=" + userId + "date=" + todayDate);
             lastExercise = user.getLast_exercise();
-            Log.e("last ex", "is" + lastExercise);
             sharedViewModel.getExercisesByDate(exerciseDate.getId()).observe(this, this::addToList);
         }
     }
@@ -137,12 +132,9 @@ public class ComputerExerciseFragment extends BaseFragment {
             //CREATE EXERCISES FOR TODAY IN DATABASE
             listOfExercise = initializer.getListOfExercises();
             initializer.addExercisesToDatabase(sharedViewModel, listOfExercise, exerciseDate.getId());
-            Log.e("create", "id=" + exerciseDate.getId());
         } else {
             listOfExercise = list;
         }
-        Log.e("ex", "list of  ex " + list.size());
-
         updateExercise();
     }
 
@@ -182,26 +174,23 @@ public class ComputerExerciseFragment extends BaseFragment {
         //DESCRIPTION
         description.setText(exercise.getDescription());
         if (exercise.getCompleted()) {
-            description.setText("DONE \n" + exercise.getDescription());
+            doneTextView.setVisibility(View.VISIBLE);
+        } else {
+            doneTextView.setVisibility(View.GONE);
         }
 
-        //REPEAT
-        repeatText.setText(String.valueOf(exercise.getRepeat()));
-
         //SET VIDEO PREVIEW
-        uri = "android.resource://" + getActivity().getPackageName() + "/";
+        String uri = "android.resource://" + getActivity().getPackageName() + "/";
 
         int raw = getResources().getIdentifier(exercise.getUrl(), "raw", getActivity().getPackageName());
 
         videoUri = Uri.parse(uri + raw);
         videoView.setVideoURI(videoUri);
         videoView.seekTo(1);
-        Log.e("exercise ", videoUri.toString());
-
 
         //TIMER
         timerCount = exercise.getTime();
-        timerText.setText(String.valueOf(timerCount));
+        timerText.setText(String.valueOf(timerCount) + "s");
 
         //INIT PROGRESSBAR
         progressBar.setProgress(0);
@@ -210,14 +199,12 @@ public class ComputerExerciseFragment extends BaseFragment {
 
 
     private void initButton() {
-        pauseIcon.setOnClickListener(v -> pauseVideo());
+        pauseIcon.setOnClickListener(v -> pauseOrPlayVideo());
     }
 
-    private void pauseVideo() {
-        Log.e("first", "click=" + firstClick);
+    private void pauseOrPlayVideo() {
         if (firstClick) {
             startTimer();
-            //videoView.start();
             pauseIcon.setImageResource(R.drawable.outline_pause_circle_outline_black_24);
             firstClick = false;
         } else {
@@ -244,7 +231,8 @@ public class ComputerExerciseFragment extends BaseFragment {
                     final int percentage = Math.round((position * 100 / (videoView.getDuration())));
 
                     progressBar.post(() -> progressBar.setProgress(percentage));
-                    progressbar_time_text_view.post(() -> progressbar_time_text_view.setText(String.valueOf(((videoView.getDuration()) - position) / 1000)));
+                    progressbar_time_text_view.post(() -> progressbar_time_text_view.setText(
+                            Utils.returnInMinutes((videoView.getDuration() - position) / 1000)));
                 }
             }, 0, 1000);
         }
@@ -266,7 +254,6 @@ public class ComputerExerciseFragment extends BaseFragment {
             firstClick = true;
             pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
 
-            Log.e("run", "canceled");
             timer.cancel();
             timer.purge();
             timer = null;
@@ -279,8 +266,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     }
 
     private void updateExerciseDate() {
-
-        Log.e("update", "updated");
         //UPDATE LAST EXERCISE USER
         user.setLast_exercise(lastExercise);
         sharedViewModel.updateUser(user);
@@ -294,8 +279,6 @@ public class ComputerExerciseFragment extends BaseFragment {
             int progress = exerciseDate.getProgress() + 100 / listOfExercise.size();
             exerciseDate.setProgress(progress);
             sharedViewModel.updateDate(exerciseDate);
-
-            Log.e("update", "last ex=" + lastExercise + "progress=" + exerciseDate.getProgress());
         }
     }
 

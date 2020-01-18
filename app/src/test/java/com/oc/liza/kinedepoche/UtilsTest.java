@@ -21,6 +21,7 @@ public class UtilsTest {
     public void setUp() {
         date = Mockito.mock(Date.class);
     }
+
     @Test
     public void getTodayDate() {
         String value = Utils.getTodayDate(date);
@@ -30,29 +31,52 @@ public class UtilsTest {
     }
 
     @Test
-    public void convertToListOfInt(){
-        String toBeConverted="123";
-        int expectedValue= 1;
+    public void convertToListOfInt() {
+        String toBeConverted = "123";
+        int expectedValue = 1;
         int value;
 
-        listInt=Utils.convertToListOfInt(toBeConverted);
-        value=listInt.get(0);
-        assertEquals(expectedValue,value);
+        listInt = Utils.convertToListOfInt(toBeConverted);
+        value = listInt.get(0);
+        assertEquals(expectedValue, value);
 
     }
 
     @Test
-    public void convertListOfIntToString(){
+    public void convertListOfIntToString() {
 
-        String expectedValue="123";
-        listInt=new ArrayList<>();
+        String expectedValue = "123";
+        listInt = new ArrayList<>();
         listInt.add(1);
         listInt.add(2);
         listInt.add(3);
-        String value=Utils.convertToString(listInt);
+        String value = Utils.convertToString(listInt);
 
 
-        assertEquals(expectedValue,value);
+        assertEquals(expectedValue, value);
     }
 
+    @Test
+    public void givenTime_whenMoreThanSixty_thenReturnInMinutes() {
+        int intValue = 97;
+        String value;
+        String expectedValue = "1:37";
+
+        value = Utils.returnInMinutes(intValue);
+
+        assertEquals(expectedValue, value);
+
+    }
+
+    @Test
+    public void givenTime_whenLessThanSixty_thenReturnInSeconds() {
+        int intValue = 55;
+        String value;
+        String expectedValue = "55";
+
+        value = Utils.returnInMinutes(intValue);
+
+        assertEquals(expectedValue, value);
+
+    }
 }

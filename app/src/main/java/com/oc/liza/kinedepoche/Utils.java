@@ -24,7 +24,7 @@ public class Utils {
         return dateFormat.format(date);
     }
 
-    public static List<Integer> convertToListOfInt(String string){
+    public static List<Integer> convertToListOfInt(String string) {
         List<Integer> listInt;
 
         Gson gson = new Gson();
@@ -35,7 +35,7 @@ public class Utils {
         return listInt;
     }
 
-    public static String convertToString(List<Integer> listOfInteger){
+    public static String convertToString(List<Integer> listOfInteger) {
         String result;
 
         StringBuilder builder = new StringBuilder();
@@ -43,6 +43,22 @@ public class Utils {
             builder.append(value);
         }
         result = builder.toString();
+        return result;
+    }
+
+    public static String returnInMinutes(int value) {
+        String result;
+        if (value > 60) {
+            String minutes = String.valueOf(value / 60);
+            String seconds = String.valueOf(value - 60 * (value / 60));
+            StringBuilder str = new StringBuilder();
+            str.append(minutes);
+            str.append(":");
+            str.append(seconds);
+            result = str.toString();
+        } else {
+            result = String.valueOf(value);
+        }
         return result;
     }
 }

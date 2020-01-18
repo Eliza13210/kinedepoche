@@ -24,31 +24,9 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <!--TIMER-->
-                <ImageView
-                    android:id="@+id/ic_timer"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/timer"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/outline_timer_black_24" />
 
-                <TextView
-                    android:id="@+id/timer_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="40 s"
-                    android:textSize="@dimen/text_size_title" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="32dp"
-                    android:layout_margin="8dp"
-                    android:background="@android:color/darker_gray" />
-
-                <!--PAUSE-->
+                <!--PAUSE/PLAY-->
                 <ImageView
                     android:id="@+id/ic_pause"
                     android:layout_width="@dimen/_48sdp"
@@ -59,29 +37,6 @@
                     android:src="@drawable/outline_play_circle_outline_24"
                     android:tint="@color/colorPrimary" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="32dp"
-                    android:layout_margin="8dp"
-                    android:background="@android:color/darker_gray" />
-
-                <!--REPEAT-->
-                <ImageView
-                    android:id="@+id/ic_repeat"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/repeat"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/outline_refresh_black_24" />
-
-                <TextView
-                    android:id="@+id/repeat_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="2x"
-                    android:textSize="@dimen/text_size_title" />
             </LinearLayout>
 
             <LinearLayout

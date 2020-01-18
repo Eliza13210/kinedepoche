@@ -49,7 +49,6 @@ public class ExerciseFragment extends BaseFragment {
         String todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
         sharedViewModel.getDate(todayDate, userId).observe(this, this::initProgress);
 
-        Log.e("initDte", "date " + "userId=" + userId + "date=" + todayDate);
         date.setText(todayDate);
     }
 
