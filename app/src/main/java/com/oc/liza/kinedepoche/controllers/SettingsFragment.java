@@ -1,7 +1,6 @@
 package com.oc.liza.kinedepoche.controllers;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -48,7 +47,7 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public void initView() {
         switchNotify.setChecked(sharedPref.getBoolean("SwitchIsChecked", false));
-        userId = sharedPref.getLong("CurrentUser", 100);
+
         sharedViewModel.getUser(userId).observe(this, this::initUser);
 
         btnUpdate.setOnClickListener(v -> updateUserName());
@@ -85,7 +84,6 @@ public class SettingsFragment extends BaseFragment {
 
     private void activateNotification() {
         if (switchNotify.isChecked()) {
-            Log.e("settingfr", "activate notification");
             sharedPref.edit().putBoolean("SwitchIsChecked", true).apply();
 
             PeriodicWorkRequest.Builder notificationBuilder =
@@ -95,7 +93,6 @@ public class SettingsFragment extends BaseFragment {
             WorkManager.getInstance(Objects.requireNonNull(getActivity())).enqueueUniquePeriodicWork("reminder",
                     ExistingPeriodicWorkPolicy.REPLACE, request);
         } else {
-            Log.e("settings", "cancel notification");
             sharedPref.edit().putBoolean("SwitchIsChecked", false).apply();
             cancelNotification();
         }

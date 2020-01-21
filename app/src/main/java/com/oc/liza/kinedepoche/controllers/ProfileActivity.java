@@ -38,10 +38,14 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
-        host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        initNavHost();
         checkIfTablet();
         initToolbar();
         initViewModel();
+    }
+
+    private void initNavHost() {
+        host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
     }
 
     private void initViewModel() {

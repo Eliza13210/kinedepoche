@@ -1,7 +1,6 @@
 package com.oc.liza.kinedepoche.controllers;
 
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -48,7 +47,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     ImageView timerIcon;
     @BindView(R.id.timer_text)
     TextView timerText;
-    TextView repeatText;
     @BindView(R.id.ic_pause)
     ImageView pauseIcon;
     @BindView(R.id.progressbar_time)
@@ -180,7 +178,7 @@ public class ComputerExerciseFragment extends BaseFragment {
         }
 
         //SET VIDEO PREVIEW
-        String uri = "android.resource://" + getActivity().getPackageName() + "/";
+        String uri = "android.resource://" + Objects.requireNonNull(getActivity()).getPackageName() + "/";
 
         int raw = getResources().getIdentifier(exercise.getUrl(), "raw", getActivity().getPackageName());
 
@@ -190,11 +188,11 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         //TIMER
         timerCount = exercise.getTime();
-        timerText.setText(String.valueOf(timerCount) + "s");
+        timerText.setText(Utils.returnInMinutes(timerCount));
 
         //INIT PROGRESSBAR
         progressBar.setProgress(0);
-        progressbar_time_text_view.setText(String.valueOf(timerCount));
+        progressbar_time_text_view.setText(Utils.returnInMinutes(timerCount));
     }
 
 
@@ -287,6 +285,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         if (videoView.isPlaying()) videoView.pause();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().show();
     }
 }

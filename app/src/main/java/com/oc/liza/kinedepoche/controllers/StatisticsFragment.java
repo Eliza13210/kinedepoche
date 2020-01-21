@@ -1,7 +1,5 @@
 package com.oc.liza.kinedepoche.controllers;
 
-import android.util.Log;
-
 import com.jjoe64.graphview.GraphView;
 import com.oc.liza.kinedepoche.R;
 import com.oc.liza.kinedepoche.StatisticsManager;
@@ -40,11 +38,8 @@ public class StatisticsFragment extends BaseFragment {
         manager.getWeekProgress();
         manager.initDataPoints();
         List<Date> listOfDates = manager.getListOfDates();
-
-        Log.e("initgraph", "date list=" + listOfDates.size());
         for (Date d : listOfDates) {
             sharedViewModel.getDate(Utils.getTodayDate(d), userId).observe(this, this::addToWeekList);
-            Log.e("initGraph", "date=" + Utils.getTodayDate(d));
         }
     }
 

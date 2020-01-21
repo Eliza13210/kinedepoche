@@ -61,7 +61,6 @@ public class StatisticsManager {
         if (result != null) {
             y = result.getProgress();
             for (int i = 0; i < listOfDates.size(); i++) {
-                Log.e("equals", "dates=" + result.getDate() + "=" + Utils.getTodayDate(listOfDates.get(i)));
                 if (result.getDate().equals((Utils.getTodayDate(listOfDates.get(i))))) {
                     x = i + 1;
                     DataPoint point = new DataPoint(x, y);
@@ -82,7 +81,8 @@ public class StatisticsManager {
 
         series.setAnimated(true);
         graphView.addSeries(series);
-// styling
+
+        // styling
         series.setValueDependentColor(data -> Color.rgb((int) data.getX() * 255 / 4, (int) Math.abs(data.getY() * 255 / 6), 100));
         series.setSpacing(50);
 

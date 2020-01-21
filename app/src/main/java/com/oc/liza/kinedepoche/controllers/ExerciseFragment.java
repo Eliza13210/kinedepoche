@@ -1,6 +1,5 @@
 package com.oc.liza.kinedepoche.controllers;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,11 +44,11 @@ public class ExerciseFragment extends BaseFragment {
     }
 
     private void initDate() {
-        //CHECK IF TODAY EXISTS IN DATABASE
         String todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
-        sharedViewModel.getDate(todayDate, userId).observe(this, this::initProgress);
-
         date.setText(todayDate);
+
+        //CHECK IF TODAY EXISTS IN DATABASE
+        sharedViewModel.getDate(todayDate, userId).observe(this, this::initProgress);
     }
 
     private void initProgress(ExerciseDate exerciseDate) {

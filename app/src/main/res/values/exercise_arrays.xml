@@ -26,8 +26,8 @@
 
     <integer-array name="time_array">
         <item>33</item>
-        <item>39</item>
         <item>63</item>
+        <item>39</item>
         <item>56</item>
         <item>83</item>
     </integer-array>

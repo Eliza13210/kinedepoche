@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.StringBufferInputStream;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -49,8 +50,15 @@ public class Utils {
     public static String returnInMinutes(int value) {
         String result;
         if (value > 60) {
-            String minutes = String.valueOf(value / 60);
-            String seconds = String.valueOf(value - 60 * (value / 60));
+            int minutesInt = value / 60;
+            String minutes = String.valueOf(minutesInt);
+            int secondsInt = value - (minutesInt * 60) * (value / 60);
+            String seconds;
+            if (secondsInt < 10) {
+                seconds = "0" + secondsInt;
+            } else {
+                seconds = String.valueOf(secondsInt);
+            }
             StringBuilder str = new StringBuilder();
             str.append(minutes);
             str.append(":");

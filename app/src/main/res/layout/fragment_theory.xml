@@ -16,12 +16,9 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/why_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Prolonged use of computer or activities with similar position such as driving often give rise to
-      musculoskeletal symptoms. Headache and back pain are the most common symptoms. The back can easily support the weight of your head and neck
-      when your posture is tall and erect, but if your head leans forward in a 45 degree angle, your neck has to work like a lever lifting a heavy object.
-Muscles need movement, contraction and relaxation in order to be free from tension and well vascularized." />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="match_parent"
@@ -32,8 +29,8 @@ Muscles need movement, contraction and relaxation in order to be free from tensi
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/how_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Take breaks every hour and do the exercises to release tensions and give oxygen to the muscles" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

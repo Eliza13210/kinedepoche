@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 sharedPref.edit().putLong("CurrentUser", user.getId()).apply();
                 sharedPref.edit().putString("CurrentUserName", user.getName()).apply();
                 sharedPref.edit().putBoolean("LoggedIn", true).apply();
-                Log.e("home", "existing user " + user.getName() + user.getId());
 
                 startActivity(new Intent(this, ProfileActivity.class));
             }
@@ -97,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             User newUser = new User();
             newUser.setName(userName);
             viewModel.createUser(newUser);
-            Log.e("home", "create user " + userName);
         }
     }
 

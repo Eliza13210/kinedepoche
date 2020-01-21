@@ -1,6 +1,5 @@
 package com.oc.liza.kinedepoche.controllers;
 
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,13 +36,12 @@ public class HomeFragment extends BaseFragment {
 
     private void updateWelcomeMessage() {
         String userName = sharedPref.getString("CurrentUserName", null);
-        String message = "Welcome back " + userName + "!";
+        String message = "Welcome " + userName + "!";
         welcomeTextView.setText(message);
     }
 
     private void initClickableImage() {
         exercise.setClickable(true);
         exercise.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action, null));
-        Log.e("main", "userId=" + sharedPref.getLong("CurrentUser", 100));
     }
 }

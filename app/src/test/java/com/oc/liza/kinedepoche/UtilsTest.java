@@ -58,9 +58,9 @@ public class UtilsTest {
 
     @Test
     public void givenTime_whenMoreThanSixty_thenReturnInMinutes() {
-        int intValue = 97;
+        int intValue = 67;
         String value;
-        String expectedValue = "1:37";
+        String expectedValue = "1:07";
 
         value = Utils.returnInMinutes(intValue);
 

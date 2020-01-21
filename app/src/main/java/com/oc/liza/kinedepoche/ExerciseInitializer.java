@@ -44,10 +44,6 @@ public class ExerciseInitializer {
         return this.listOfExercises;
     }
 
-    public Exercise getExercise(int id) {
-        return listOfExercises.get(id);
-    }
-
     public void addExercisesToDatabase(UserViewModel viewModel, List<Exercise> list, long dateId) {
         for (Exercise exercise : list) {
             exercise.setDateId(dateId);
@@ -55,7 +51,4 @@ public class ExerciseInitializer {
         viewModel.insertListOfExercises(list);
     }
 
-    public int getCount() {
-        return listOfExercises.size();
-    }
 }
