@@ -1,42 +1,24 @@
 package com.oc.liza.kinedepoche;
 
-import android.text.TextUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.StringBufferInputStream;
-import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Utils {
 
     public static String getTodayDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         return dateFormat.format(date);
     }
 
-    public static String getSimpleDate(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+    static String getSimpleDate(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM", Locale.FRANCE);
         return dateFormat.format(date);
     }
 
-    public static List<Integer> convertToListOfInt(String string) {
-        List<Integer> listInt;
-
-        Gson gson = new Gson();
-        Type type = new TypeToken<Integer>() {
-        }.getType();
-
-        listInt = gson.fromJson(string, type);
-        return listInt;
-    }
-
-    public static String convertToString(List<Integer> listOfInteger) {
+    static String convertToString(List<Integer> listOfInteger) {
         String result;
 
         StringBuilder builder = new StringBuilder();
@@ -59,11 +41,9 @@ public class Utils {
             } else {
                 seconds = String.valueOf(secondsInt);
             }
-            StringBuilder str = new StringBuilder();
-            str.append(minutes);
-            str.append(":");
-            str.append(seconds);
-            result = str.toString();
+            result = minutes +
+                    ":" +
+                    seconds;
         } else {
             result = String.valueOf(value);
         }

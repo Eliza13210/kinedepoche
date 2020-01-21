@@ -1,7 +1,5 @@
 package com.oc.liza.kinedepoche;
 
-import android.content.Context;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -30,17 +28,6 @@ public class UtilsTest {
         assertEquals(expectedValue, value);
     }
 
-    @Test
-    public void convertToListOfInt() {
-        String toBeConverted = "123";
-        int expectedValue = 1;
-        int value;
-
-        listInt = Utils.convertToListOfInt(toBeConverted);
-        value = listInt.get(0);
-        assertEquals(expectedValue, value);
-
-    }
 
     @Test
     public void convertListOfIntToString() {

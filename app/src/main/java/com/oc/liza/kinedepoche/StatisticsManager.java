@@ -57,6 +57,10 @@ public class StatisticsManager {
         }
     }
 
+    List<DataPoint> getListOfDataPoints() {
+        return this.listDataPoints;
+    }
+
     public void updateDataPoints(ExerciseDate result) {
         if (result != null) {
             y = result.getProgress();

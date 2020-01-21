@@ -53,6 +53,7 @@ public class NotifyWorker extends Worker {
         notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
     }
 
+    //Create pending intent so that click on the notification opens up the application
     private PendingIntent createIntent() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
