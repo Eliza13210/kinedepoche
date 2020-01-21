@@ -45,5 +45,6 @@
     <string name="log_in">Log in</string>
     <string name="exercise_where_ever_you_are">Exercise where ever you are!</string>
     <string name="done">DONE</string>
+    <string name="today_progress_drawer">Today progress:</string>
 
 </resources>

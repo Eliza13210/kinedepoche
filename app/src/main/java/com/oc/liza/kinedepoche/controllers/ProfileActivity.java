@@ -1,6 +1,7 @@
 package com.oc.liza.kinedepoche.controllers;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,9 +10,13 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.oc.liza.kinedepoche.R;
+import com.oc.liza.kinedepoche.Utils;
 import com.oc.liza.kinedepoche.injections.Injection;
 import com.oc.liza.kinedepoche.injections.ViewModelFactory;
+import com.oc.liza.kinedepoche.models.ExerciseDate;
 import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
+
+import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -28,9 +33,10 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private boolean tablet = false;
     private NavHostFragment host;
-    public UserViewModel viewModel;
+    private UserViewModel viewModel;
+    private SharedPreferences sharedPref;
+    private View navView;
 
 
     @Override
@@ -39,9 +45,10 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         initNavHost();
-        checkIfTablet();
         initToolbar();
         initViewModel();
+        initSharedPref();
+        checkIfTablet();
     }
 
     private void initNavHost() {
@@ -51,6 +58,10 @@ public class ProfileActivity extends AppCompatActivity {
     private void initViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.viewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel.class);
+    }
+
+    private void initSharedPref() {
+        sharedPref = this.getSharedPreferences("KineDePoche", MODE_PRIVATE);
     }
 
 
@@ -77,7 +88,6 @@ public class ProfileActivity extends AppCompatActivity {
     private void checkIfTablet() {
         //IF TABLET, SHOW DRAWER
         if (getResources().getBoolean(R.bool.isTablet)) {
-            tablet = true;
             setNavigationTablet();
         }
         //IF PHONE SHOW BOTTOM NAVIGATION
@@ -111,13 +121,29 @@ public class ProfileActivity extends AppCompatActivity {
     // Configure Drawer Layout if tablet
     private void initDrawerHeader(NavigationView navigationView) {
         //Inflate header layout
-        View navView = navigationView.inflateHeaderView(R.layout.drawer_header_main);
+        navView = navigationView.inflateHeaderView(R.layout.drawer_header_main);
 
         //Find views in header
-        ImageView user_photo = navView.findViewById(R.id.photo);
         TextView user_name = navView.findViewById(R.id.user_name);
-        TextView user_email = navView.findViewById(R.id.user_email);
 
-        //Set photo
+        String userName = sharedPref.getString("CurrentUserName", "Error");
+        user_name.setText(userName);
+        String todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
+        //CHECK IF TODAY EXISTS IN DATABASE
+        viewModel.getDate(todayDate, sharedPref.getLong("CurrentUser", 100)).observe(this, this::initProgress);
+    }
+
+    //SHOW TODAY PROGRESS IN DRAWER HEADER
+    private void initProgress(ExerciseDate exerciseDate) {
+        TextView user_progress = navView.findViewById(R.id.progress_text);
+        StringBuilder str=new StringBuilder();
+        str.append(getResources().getString(R.string.today_progress_drawer));
+        if (exerciseDate != null) {
+             str.append(exerciseDate.getProgress());
+        } else {
+            str.append("0");
+        }
+        str.append("%");
+        user_progress.setText(str.toString());
     }
 }
