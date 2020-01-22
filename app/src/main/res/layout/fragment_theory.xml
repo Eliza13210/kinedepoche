@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="4dp"
     android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_margin="@dimen/_4sdp"
     tools:context=".controllers.TheoryFragment">
 
     <TextView
@@ -12,25 +13,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Why?"
-        android:textSize="@dimen/title_big"
+        android:textSize="@dimen/_24ssp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/why_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_12sdp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="How?"
-        android:textSize="@dimen/title_big"
+        android:textSize="@dimen/_24ssp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/how_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_12sdp"/>
 
 </LinearLayout>

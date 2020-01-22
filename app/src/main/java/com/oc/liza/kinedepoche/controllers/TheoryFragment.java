@@ -26,9 +26,11 @@ public class TheoryFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        why_text_view.setText("Prolonged use of computer or activities with similar position such as driving often give rise to\n" +
-                "      musculoskeletal symptoms. Headache and back pain are the most common symptoms. The back can easily support the weight of your head and neck\n" +
-                "      when your posture is tall and erect, but if your head leans forward in a 45 degree angle, your neck has to work like a lever lifting a heavy object.\n" +
+        why_text_view.setText("Prolonged use of computer or activities with similar position such as driving often give rise to" +
+                " musculoskeletal symptoms. Headache and back pain are the most common symptoms. " +
+                "The back can easily support the weight of your head and neck" +
+                " when your posture is tall and erect, but if your head leans forward in a 45 degree angle," +
+                " your neck has to work like a lever lifting a heavy object.\n" +
                 "Muscles need movement, contraction and relaxation in order to be free from tension and well vascularized.");
 
         how_text_view.setText("Take breaks every hour and do the exercises to release tensions and give oxygen to the muscles");
