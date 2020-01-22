@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="4dp"
+    android:layout_margin="@dimen/_4sdp"
     android:orientation="vertical"
     tools:context=".controllers.StatisticsFragment">
 
@@ -14,11 +14,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="4dp"
         android:text="@string/statistics"
-        android:textSize="@dimen/title_big" />
+        android:textSize="@dimen/_20sdp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/_12sdp"
         android:text="@string/description_statistics" />
 
     <com.jjoe64.graphview.GraphView
@@ -27,7 +28,6 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
-        android:title="title"
         app:seriesColor="@color/colorPrimaryDark"
         app:seriesTitle="percentage" />
 
