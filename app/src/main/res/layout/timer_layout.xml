@@ -29,8 +29,8 @@
                 <!--PAUSE/PLAY-->
                 <ImageView
                     android:id="@+id/ic_pause"
-                    android:layout_width="@dimen/_48sdp"
-                    android:layout_height="@dimen/_48sdp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:contentDescription="@string/pause"
                     android:scaleType="centerCrop"

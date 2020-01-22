@@ -90,7 +90,7 @@ public class ComputerExerciseFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         //Hide toolbar
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
+       // Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
     }
 
     private void initExercisesAndUser() {
@@ -285,6 +285,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         if (videoView.isPlaying()) videoView.pause();
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().show();
+        //((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().show();
     }
 }
