@@ -39,6 +39,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_gravity="start"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:menu="@menu/activity_main_drawer">
     </com.google.android.material.navigation.NavigationView>

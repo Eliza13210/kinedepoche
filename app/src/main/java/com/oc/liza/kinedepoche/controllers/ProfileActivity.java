@@ -19,6 +19,7 @@ import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,19 +33,20 @@ import androidx.navigation.ui.NavigationUI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.activity_main_navigation_view)
-    NavigationView navigation_view;
+public class ProfileActivity extends AppCompatActivity {
+    @Nullable
     @BindView(R.id.activity_drawer_layout)
     DrawerLayout drawerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    //FOR TABLET ONLY
+    private View navView;
+    private NavigationView navigationView;
 
     private NavHostFragment host;
     private UserViewModel viewModel;
     private SharedPreferences sharedPref;
-    private View navView;
 
 
     @Override
@@ -113,10 +115,11 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     //SET UP DRAWER NAVIGATION
     private void setNavigationTablet() {
-        NavigationUI.setupWithNavController(navigation_view,
+        navigationView = findViewById(R.id.activity_main_navigation_view);
+        NavigationUI.setupWithNavController(navigationView,
                 host.getNavController());
-        initDrawerHeader(navigation_view);
-        if(drawerLayout!=null) configureDrawerLayout();
+        initDrawerHeader(navigationView);
+        if (drawerLayout != null) configureDrawerLayout();
     }
 
 
@@ -161,7 +164,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-      //  navigation_view.setNavigationItemSelectedListener(this);
+        //  navigation_view.setNavigationItemSelectedListener(this);
     }
 
 
@@ -178,15 +181,4 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Handle user click in drawer menu and action bar menu
-     *
-     * @param item the user clicked on
-     */
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }
