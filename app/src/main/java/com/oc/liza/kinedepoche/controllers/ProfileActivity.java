@@ -1,8 +1,12 @@
 package com.oc.liza.kinedepoche.controllers;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,8 +22,12 @@ import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -28,10 +36,14 @@ import androidx.navigation.ui.NavigationUI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.activity_main_navigation_view)
+    NavigationView navigation_view;
+    @BindView(R.id.activity_drawer_layout)
+    DrawerLayout drawerLayout;
 
     private NavHostFragment host;
     private UserViewModel viewModel;
@@ -105,10 +117,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     //SET UP DRAWER NAVIGATION
     private void setNavigationTablet() {
-        NavigationView sideNavView = findViewById(R.id.activity_main_navigation_view);
-        NavigationUI.setupWithNavController(sideNavView,
+        NavigationUI.setupWithNavController(navigation_view,
                 host.getNavController());
-        initDrawerHeader(sideNavView);
+        initDrawerHeader(navigation_view);
+        if(drawerLayout!=null) configureDrawerLayout();
     }
 
 
@@ -136,14 +148,49 @@ public class ProfileActivity extends AppCompatActivity {
     //SHOW TODAY PROGRESS IN DRAWER HEADER
     private void initProgress(ExerciseDate exerciseDate) {
         TextView user_progress = navView.findViewById(R.id.progress_text);
-        StringBuilder str=new StringBuilder();
+        StringBuilder str = new StringBuilder();
         str.append(getResources().getString(R.string.today_progress_drawer));
         if (exerciseDate != null) {
-             str.append(exerciseDate.getProgress());
+            str.append(exerciseDate.getProgress());
         } else {
             str.append("0");
         }
         str.append("%");
         user_progress.setText(str.toString());
+    }
+
+    // Configure Drawer Layout
+    private void configureDrawerLayout() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+      //  navigation_view.setNavigationItemSelectedListener(this);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Handle user click in drawer menu and action bar menu
+     *
+     * @param item the user clicked on
+     */
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
