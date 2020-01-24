@@ -37,10 +37,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="@string/exercise_1_of_4"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="20dp" />
 
             <ImageView
                 android:id="@+id/ic_right"

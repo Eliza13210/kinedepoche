@@ -33,10 +33,7 @@
         <action
             android:id="@+id/next_action"
             app:destination="@+id/computer_exercise_dest"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
     </fragment>
 
     <fragment
@@ -46,11 +43,7 @@
         tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/next_action"
-            app:destination="@+id/home_dest"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@+id/home_dest" />
     </fragment>
 
     <fragment
@@ -64,10 +57,6 @@
         android:name="com.oc.liza.kinedepoche.controllers.ComputerExerciseFragment"
         android:label="@string/comp_exercise"
         tools:layout="@layout/fragment_computer_exercise">
-        <argument
-            android:name="program"
-            android:defaultValue="1"
-            app:argType="string" />
     </fragment>
 
 </navigation>
