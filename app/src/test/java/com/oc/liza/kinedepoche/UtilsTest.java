@@ -13,7 +13,6 @@ import static junit.framework.Assert.assertEquals;
 public class UtilsTest {
 
     private Date date;
-    private List<Integer> listInt;
 
     @Before
     public void setUp() {
@@ -33,12 +32,11 @@ public class UtilsTest {
     public void convertListOfIntToString() {
 
         String expectedValue = "123";
-        listInt = new ArrayList<>();
+        List<Integer> listInt = new ArrayList<>();
         listInt.add(1);
         listInt.add(2);
         listInt.add(3);
         String value = Utils.convertToString(listInt);
-
 
         assertEquals(expectedValue, value);
     }

@@ -41,7 +41,4 @@ public class StatisticsManagerTest {
 
     }
 
-    @Test
-    public void updateDataPoints() {
-    }
 }
