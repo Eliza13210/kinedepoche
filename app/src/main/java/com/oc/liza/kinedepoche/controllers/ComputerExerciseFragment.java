@@ -64,11 +64,10 @@ public class ComputerExerciseFragment extends BaseFragment {
     private List<Exercise> listOfExercise;
 
     private Uri videoUri;
-
     private int timerCount;
-
     private Timer timer;
     private boolean firstClick = true;
+    private boolean isTablet = false;
 
     public ComputerExerciseFragment() {
         // Required empty public constructor
@@ -89,11 +88,13 @@ public class ComputerExerciseFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        //Hide toolbar
-        if (!getActivity().getResources().getBoolean(R.bool.isTablet))
+        isTablet = Objects.requireNonNull(getActivity()).getResources().getBoolean(R.bool.isTablet);
+        //Hide toolbar if phone
+        if (!isTablet)
             Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
     }
 
+    //ADD EXERCISES
     private void initExercisesAndUser() {
         initializer = new ExerciseInitializer(getActivity());
         initializer.initExerciseProgram();
@@ -105,18 +106,17 @@ public class ComputerExerciseFragment extends BaseFragment {
         initExerciseDate();
     }
 
+    //CHECK IF USER HAS STARTED EXERCISES TODAY
     private void initExerciseDate() {
         todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
-        //CHECK IF USER HAS STARTED EXERCISES TODAY
         sharedViewModel.getDate(todayDate, userId).observe(this, this::createDate);
     }
 
+    //IF EXERCISE DATE DOESN'T EXIST IN DATABASE, CREATE ONE FOR TODAY
     private void createDate(ExerciseDate date) {
         if (date == null) {
             user.setLast_exercise(0);
             sharedViewModel.updateUser(user);
-
-            //IF EXERCISE DATE DOESN'T EXIST IN DATABASE, CREATE ONE FOR TODAY
             exerciseDate = new ExerciseDate(null, userId, todayDate, 0);
             sharedViewModel.createDate(exerciseDate);
         } else {
@@ -126,9 +126,9 @@ public class ComputerExerciseFragment extends BaseFragment {
         }
     }
 
+    //CREATE EXERCISES FOR TODAY IN DATABASE IF THEY HAVEN'T YET BEEN ADDED TODAY
     private void addToList(List<Exercise> list) {
         if (list.isEmpty()) {
-            //CREATE EXERCISES FOR TODAY IN DATABASE
             listOfExercise = initializer.getListOfExercises();
             initializer.addExercisesToDatabase(sharedViewModel, listOfExercise, exerciseDate.getId());
         } else {
@@ -137,6 +137,7 @@ public class ComputerExerciseFragment extends BaseFragment {
         updateExercise();
     }
 
+    //NAVIGATION ON TOP
     private void initNavigation() {
         iconLeft.setOnClickListener(v -> clickLeft());
         iconRight.setOnClickListener(v -> clickRight());
@@ -164,6 +165,7 @@ public class ComputerExerciseFragment extends BaseFragment {
         }
     }
 
+    //SHOW CURRENT EXERCISE
     private void updateExercise() {
         exercise = listOfExercise.get(lastExercise);
 
@@ -180,9 +182,7 @@ public class ComputerExerciseFragment extends BaseFragment {
 
         //SET VIDEO PREVIEW
         String uri = "android.resource://" + Objects.requireNonNull(getActivity()).getPackageName() + "/";
-
         int raw = getResources().getIdentifier(exercise.getUrl(), "raw", getActivity().getPackageName());
-
         videoUri = Uri.parse(uri + raw);
         videoView.setVideoURI(videoUri);
         videoView.seekTo(1);
@@ -196,7 +196,7 @@ public class ComputerExerciseFragment extends BaseFragment {
         progressbar_time_text_view.setText(Utils.returnInMinutes(timerCount));
     }
 
-
+    //Start or pause video
     private void initButton() {
         pauseIcon.setOnClickListener(v -> pauseOrPlayVideo());
     }
@@ -286,6 +286,7 @@ public class ComputerExerciseFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         if (videoView.isPlaying()) videoView.pause();
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().show();
+        if (!isTablet)
+            ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().show();
     }
 }

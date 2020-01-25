@@ -33,6 +33,10 @@ public class StatisticsFragment extends BaseFragment {
         initGraph();
     }
 
+    /**
+     * Using statistics manager to initiate the graph and placing the data points. The progress per date is saved in the database
+     * and collected here
+     */
     private void initGraph() {
         manager = new StatisticsManager(graphView);
         manager.getWeekProgress();
@@ -43,6 +47,7 @@ public class StatisticsFragment extends BaseFragment {
         }
     }
 
+    //Add the progress per day
     private void addToWeekList(ExerciseDate result) {
         manager.updateDataPoints(result);
     }

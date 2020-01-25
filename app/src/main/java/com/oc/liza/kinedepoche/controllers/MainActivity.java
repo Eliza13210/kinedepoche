@@ -29,10 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.user_name_text_input)
     TextInputEditText userNameInput;
-
     @BindView(R.id.btn_save)
     MaterialButton buttonSave;
-
 
     public static final String CHANNEL_ID = "NOTIFICATION CHANNEL";
     public UserViewModel viewModel;
@@ -53,10 +51,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        sharedPref = this.getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
+        initSharedPref();
         initViewModel();
         initButton();
         createNotificationChannel();
+    }
+
+    private void initSharedPref() {
+        sharedPref = this.getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
     }
 
     private void initViewModel() {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private void logInUser(List<User> list) {
         //CHECK IF FIRST TIME USER
         String userName = Objects.requireNonNull(userNameInput.getText()).toString();
+
         for (User user : list) {
             if (user.getName().equals(userName)) {
                 loggedIn = true;
@@ -117,7 +120,5 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("KineDePoche", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString("CHANNEL_KEY", CHANNEL_ID).apply();
-
     }
-
 }

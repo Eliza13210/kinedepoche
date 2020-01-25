@@ -18,7 +18,6 @@ import com.oc.liza.kinedepoche.viewmodel.UserViewModel;
 
 import java.util.Calendar;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,9 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +39,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     //FOR TABLET ONLY
     private View navView;
-    private NavigationView navigationView;
 
     private NavHostFragment host;
     private UserViewModel viewModel;
@@ -61,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         checkIfTablet();
     }
 
+    // NAVIGATION BY NAV GRAPH
     private void initNavHost() {
         host = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
     }
@@ -73,27 +70,6 @@ public class ProfileActivity extends AppCompatActivity {
     private void initSharedPref() {
         sharedPref = this.getSharedPreferences("KineDePoche", MODE_PRIVATE);
     }
-
-
-    private void setupNavigationMenu(NavController navController) {
-        // TODO STEP 9.4 - Use NavigationUI to set up a Navigation View
-//        // In split screen mode, you can drag this view out from the left
-//        // This does NOT modify the actionbar
-//        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
-//        sideNavView?.setupWithNavController(navController)
-        // TODO END STEP 9.4
-    }
-
-    private void setupActionBar(NavController navController,
-                                AppBarConfiguration appBarConfig) {
-        // TODO STEP 9.6 - Have NavigationUI handle what your ActionBar displays
-//        // This allows NavigationUI to decide what label to show in the action bar
-//        // By using appBarConfig, it will also determine whether to
-//        // show the up arrow or drawer menu icon
-//        setupActionBarWithNavController(navController, appBarConfig)
-        // TODO END STEP 9.6
-    }
-
 
     private void checkIfTablet() {
         //IF TABLET, SHOW DRAWER
@@ -115,18 +91,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     //SET UP DRAWER NAVIGATION
     private void setNavigationTablet() {
-        navigationView = findViewById(R.id.activity_main_navigation_view);
+        NavigationView navigationView = findViewById(R.id.activity_main_navigation_view);
         NavigationUI.setupWithNavController(navigationView,
                 host.getNavController());
         initDrawerHeader(navigationView);
         if (drawerLayout != null) configureDrawerLayout();
     }
 
-
     private void initToolbar() {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
     }
 
     // Configure Drawer Layout if tablet
@@ -136,11 +110,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Find views in header
         TextView user_name = navView.findViewById(R.id.user_name);
-
         String userName = sharedPref.getString("CurrentUserName", "Error");
         user_name.setText(userName);
+
+        //CHECK IF TODAY PROGRESS EXISTS IN DATABASE
         String todayDate = Utils.getTodayDate(Calendar.getInstance().getTime());
-        //CHECK IF TODAY EXISTS IN DATABASE
         viewModel.getDate(todayDate, sharedPref.getLong("CurrentUser", 100)).observe(this, this::initProgress);
     }
 
@@ -162,14 +136,14 @@ public class ProfileActivity extends AppCompatActivity {
     private void configureDrawerLayout() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
+        assert drawerLayout != null;
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        //  navigation_view.setNavigationItemSelectedListener(this);
     }
-
 
     @Override
     public void onBackPressed() {
+        assert this.drawerLayout != null;
         if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             this.drawerLayout.closeDrawer(GravityCompat.START);
         }
@@ -180,5 +154,4 @@ public class ProfileActivity extends AppCompatActivity {
         // Handle action bar item clicks here
         return super.onOptionsItemSelected(item);
     }
-
 }

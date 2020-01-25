@@ -30,6 +30,9 @@
     <string name="profile">Profile</string>
     <string name="save">Valider</string>
 
+    <string name="user_exists">Choisissez un autre nom</string>
+    <string name="enter_new_user_name">Choisissez un nom d\'abord</string>
+
     <string name="update">Mettre à jour</string>
     <string name="channel_name">notify</string>
     <string name="channel_description">notification</string>
@@ -58,5 +61,16 @@
     <!--THEORY FRAGMENT-->
     <string name="why">Pourquoi?</string>
     <string name="how">Comment?</string>
-
+    <string name="why_text">Un travail prolongé devant l\'ordinateur provoque souvent des douleur musculo squelettiques dûes à la position
+        statique. Les plus courants sont des maux de têtes et des douleurs du dos. C\'est important de garder une bonne posture. Le dos peut
+        facilement supporter le poids de la tête et la nuque quand la posture est droite, mais si votre tête est penchée en avant, votre nuque doit
+        travailler comme un bras de levier, ce qui augment considérablement le poids.
+        Nos muscles sont faits pour faire des mouvements de contraction et relâchement pour être bien vascularisés et libres des tensions.
+        Le travail devant un bureau est un travail statique et monotone notamment pour le haut du dos, les épaules et la nuque. Des tensions dûes
+        à cette manque de mouvement se trouvent souvent dans les trapèzes et les muscles qui stabilisent la nuque. Si les tensions perdurent,
+        les articulations sont compressés et mal vascularisés avec des risques de développer des problèmes comme de l\'artrose et une diminution de
+        l\'espace articulaire de l\'épaule.
+    </string>
+    <string name="how_text">Veillez à avoir une bonne posture et une bonne hauteur de bureau. Faites
+    des pauses régulièrement, environ toutes les deux heures afin de faire quelques mouvements pour oxygéner les muscles. </string>
 </resources>
