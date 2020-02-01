@@ -2,6 +2,7 @@ package com.oc.liza.kinedepoche.controllers;
 
 
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,6 +73,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void checkIfTablet() {
+        //IF PHONE SHOW ONLY PORTRAIT MODE
+        if (getResources().getBoolean(R.bool.portrait_only)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         //IF TABLET, SHOW DRAWER
         if (getResources().getBoolean(R.bool.isTablet)) {
             setNavigationTablet();

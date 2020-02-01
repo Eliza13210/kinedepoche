@@ -77,7 +77,8 @@ public class SettingsFragment extends BaseFragment {
             sharedViewModel.updateUser(user);
             sharedPref.edit().putString("CurrentUserName", user.getName()).apply();
         } else {
-            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.user_exists), Toast.LENGTH_SHORT).show();
+            if (getActivity().getResources() != null)
+                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.user_exists), Toast.LENGTH_SHORT).show();
         }
     }
 
