@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 
@@ -39,6 +40,7 @@ public class ComputerExerciseFragment extends BaseFragment {
     VideoView videoView;
     @BindView(R.id.description_exercise)
     TextView description;
+    @Nullable
     @BindView(R.id.description_frame_layout)
     FrameLayout description_frame_layout;
     @BindView(R.id.progressBar)
@@ -64,6 +66,7 @@ public class ComputerExerciseFragment extends BaseFragment {
     private List<Exercise> listOfExercise;
 
     private Uri videoUri;
+
     private int timerCount;
     private Timer timer;
     private boolean firstClick = true;
@@ -179,14 +182,16 @@ public class ComputerExerciseFragment extends BaseFragment {
         } else {
             doneTextView.setVisibility(View.GONE);
         }
-
         //SET VIDEO PREVIEW
         String uri = "android.resource://" + Objects.requireNonNull(getActivity()).getPackageName() + "/";
         int raw = getResources().getIdentifier(exercise.getUrl(), "raw", getActivity().getPackageName());
+
         videoUri = Uri.parse(uri + raw);
         videoView.setVideoURI(videoUri);
-        videoView.seekTo(1);
-
+        videoView.requestFocus();
+        videoView.setOnPreparedListener(mediaPlayer -> {
+            videoView.seekTo(1);
+        });
         //TIMER
         timerCount = exercise.getTime();
         timerText.setText(Utils.returnInMinutes(timerCount));
@@ -238,30 +243,36 @@ public class ComputerExerciseFragment extends BaseFragment {
     }
 
     private void playVideo() {
-        description_frame_layout.setVisibility(View.INVISIBLE);
+        if (description_frame_layout != null)
+            description_frame_layout.setVisibility(View.INVISIBLE);
+
         MediaController mc = new MediaController(getActivity());
         mc.setVisibility(View.GONE);
         mc.setAnchorView(videoView);
         mc.setMediaPlayer(videoView);
-
         videoView.setMediaController(mc);
         videoView.setVideoURI(videoUri);
 
-        videoView.start();
         videoView.setOnCompletionListener(mp -> {
             // Video Playing is completed
             firstClick = true;
             pauseIcon.setImageResource(R.drawable.outline_play_circle_outline_black_24);
 
-            timer.cancel();
-            timer.purge();
-            timer = null;
+            if (timer != null) {
+                timer.cancel();
+                timer.purge();
+                timer = null;
+            }
             navigationPossible = true;
             timerCount = videoView.getDuration();
-            description_frame_layout.setVisibility(View.VISIBLE);
+
+            if (description_frame_layout != null)
+                description_frame_layout.setVisibility(View.VISIBLE);
 
             updateExerciseDate();
         });
+
+        videoView.setOnPreparedListener(mediaPlayer -> videoView.start());
     }
 
     private void updateExerciseDate() {

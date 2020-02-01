@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="video_url_array">
+        <item>ex_one</item>
+        <item>ex_two</item>
+        <item>ex_three</item>
+        <item>ex_four</item>
+        <item>ex_five</item>
+    </string-array>
+
+    <string-array name="exercise_number_array">
+        <item>Exercice 1/5</item>
+        <item>Exercice 2/5</item>
+        <item>Exercice 3/5</item>
+        <item>Exercice 4/5</item>
+        <item>Exercice 5/5</item>
+    </string-array>
+
+    <string-array name="description_array">
+        <item>Mobilisation pour le haut du dos, les épaules et la region scapulaire.</item>
+        <item>Mobilisation du rachis en rotation.</item>
+        <item>Mobilisation du haut du dos et les bras.</item>
+        <item>Mobilisation du cervical.</item>
+        <item>Mobilisation de la main, du poignet et de l\'épaule.</item>
+    </string-array>
+
+    <integer-array name="time_array">
+        <item>33</item>
+        <item>63</item>
+        <item>39</item>
+        <item>56</item>
+        <item>83</item>
+    </integer-array>
+</resources>

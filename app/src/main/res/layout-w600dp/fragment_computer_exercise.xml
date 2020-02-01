@@ -39,7 +39,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/ic_right"
@@ -57,13 +57,14 @@
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/navigation_layout">
 
         <VideoView
             android:id="@+id/exercise_video_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
     </FrameLayout>
 
     <!--DESCRIPTION EXERCISE-->
@@ -88,8 +89,10 @@
                 android:background="@color/white" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+
+                android:layout_gravity="center"
                 android:layout_margin="@dimen/_8sdp"
                 android:orientation="vertical">
 
@@ -100,6 +103,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="@dimen/_24ssp"
+                    android:text="frr"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -138,10 +142,8 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </FrameLayout>
-
-
-
     </LinearLayout>
+
     <!--TIMER LAYOUT-->
     <include
         layout="@layout/timer_layout"
