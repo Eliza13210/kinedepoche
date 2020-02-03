@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -38,8 +39,6 @@ public class ComputerExerciseFragment extends BaseFragment {
     TextView exerciseNumber;
     @BindView(R.id.exercise_video_view)
     VideoView videoView;
-    @BindView(R.id.description_exercise)
-    TextView description;
     @Nullable
     @BindView(R.id.description_frame_layout)
     FrameLayout description_frame_layout;
@@ -53,6 +52,9 @@ public class ComputerExerciseFragment extends BaseFragment {
     ImageView pauseIcon;
     @BindView(R.id.progressbar_time)
     TextView progressbar_time_text_view;
+    @BindView(R.id.textSwitcher)
+    TextSwitcher descriptionText;
+
     private ExerciseInitializer initializer;
 
     private User user;
@@ -76,6 +78,8 @@ public class ComputerExerciseFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+
+
     @Override
     public int getLayoutView() {
         return R.layout.fragment_computer_exercise;
@@ -91,6 +95,8 @@ public class ComputerExerciseFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        descriptionText.setInAnimation(getActivity(), android.R.anim.slide_in_left);
+        descriptionText.setOutAnimation(getActivity(), android.R.anim.slide_out_right);
         isTablet = Objects.requireNonNull(getActivity()).getResources().getBoolean(R.bool.isTablet);
         //Hide toolbar if phone
         if (!isTablet)
@@ -175,13 +181,14 @@ public class ComputerExerciseFragment extends BaseFragment {
         //SET EXERCISE NUMBER IN NAVIGATION
         exerciseNumber.setText(exercise.getNav_text());
 
-        //DESCRIPTION
-        description.setText(exercise.getDescription());
+       //DESCRIPTION
+        descriptionText.setText(exercise.getDescription());
         if (exercise.getCompleted()) {
             doneTextView.setVisibility(View.VISIBLE);
         } else {
             doneTextView.setVisibility(View.GONE);
         }
+
         //SET VIDEO PREVIEW
         String uri = "android.resource://" + Objects.requireNonNull(getActivity()).getPackageName() + "/";
         int raw = getResources().getIdentifier(exercise.getUrl(), "raw", getActivity().getPackageName());
