@@ -34,7 +34,7 @@ public class UserDaoTest {
     // FOR DATA
     private UserDatabase database;
 
-    private static ExerciseDate NEW_DATE = new ExerciseDate(USER_ID, USER_ID, "2019-01-01", 20, "1");
+    private static ExerciseDate NEW_DATE = new ExerciseDate(USER_ID, USER_ID, "2019-01-01", 20);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();

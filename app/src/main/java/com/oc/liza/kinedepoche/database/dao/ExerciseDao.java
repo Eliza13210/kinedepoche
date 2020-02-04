@@ -1,9 +1,6 @@
 package com.oc.liza.kinedepoche.database.dao;
 
-import android.database.Cursor;
-
 import com.oc.liza.kinedepoche.models.Exercise;
-import com.oc.liza.kinedepoche.models.ExerciseDate;
 
 import java.util.List;
 
