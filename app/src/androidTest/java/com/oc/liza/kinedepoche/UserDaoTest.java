@@ -63,7 +63,7 @@ public class UserDaoTest {
 
 
     @Test
-    public void getPhotosWhenNoPhotosInserted() throws InterruptedException {
+    public void getDatesWhenNoDatesInserted() throws InterruptedException {
         // TEST
         List<ExerciseDate> dates = LiveDataTestUtil.getValue(this.database.dateDao().getDates(USER_ID));
         assertTrue(dates.isEmpty());
