@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Why?"
+        android:text="@string/why"
         android:textSize="@dimen/_24ssp"
         android:textStyle="bold" />
 
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="How?"
+        android:text="@string/how"
         android:textSize="@dimen/_24ssp"
         android:textStyle="bold" />
 

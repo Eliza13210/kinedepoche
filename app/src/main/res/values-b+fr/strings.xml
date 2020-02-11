@@ -22,8 +22,10 @@
     <string name="start_btn">Start</string>
 
     <!-- HOME FRAGMENT -->
-    <string name="welcome">Bienvenu !</string>
+    <string name="welcome">Bienvenu </string>
     <string name="current_program">PROGRAMME EN COURS</string>
+    <string name="home">Accueil</string>
+    <string name="user_name">Nom d\'utilisateur</string>
 
     <!--SETTING FRAGMENT -->
     <string name="daily_reminder">Rappel quotidien</string>
@@ -39,16 +41,13 @@
     <string name="notification_message_body">C\'est l\'heure de faire vos exercices!</string>
     <string name="log_out">Déconnexion</string>
 
-    <!--HOME FRAGMENT-->
-    <string name="home">Accueil</string>
-    <string name="user_name">Nom d\'utilisateur</string>
 
     <!--EXERCISE FRAGMENT-->
     <string name="trophy">Trophy</string>
     <string name="trophy_text">Félicitations! Vous avez terminé tous les exercices!</string>
 
     <!--STATISTICS FRAGMENT-->
-    <string name="description_statistics">Le graphe montre le progres en pourcentage pour les 5 derniers jours.</string>
+    <string name="description_statistics">Le graphe montre le progrès en pourcentage pour les 5 derniers jours.</string>
 
     <!--MAIN ACTIVITY-->
     <string name="log_in">Log in</string>
@@ -56,7 +55,7 @@
     <string name="exercise_where_ever_you_are">Exercices à faire partout!</string>
     <string name="done">Terminé</string>
 
-    <string name="today_progress_drawer">Progres aujourd\'hui:</string>
+    <string name="today_progress_drawer">Le progrès d\'aujourd\'hui:</string>
 
     <!--THEORY FRAGMENT-->
     <string name="why">Pourquoi?</string>

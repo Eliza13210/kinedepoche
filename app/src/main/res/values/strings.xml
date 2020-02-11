@@ -24,7 +24,7 @@
     <string name="done">DONE</string>
 
     <!-- HOME FRAGMENT -->
-    <string name="welcome">Welcome !</string>
+    <string name="welcome">Welcome </string>
     <string name="current_program">CURRENT PROGRAM</string>
 
     <!--SETTING FRAGMENT -->

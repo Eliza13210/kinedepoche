@@ -36,7 +36,7 @@ public class HomeFragment extends BaseFragment {
 
     private void updateWelcomeMessage() {
         String userName = sharedPref.getString("CurrentUserName", null);
-        String message = "Welcome " + userName + "!";
+        String message = getActivity().getResources().getString(R.string.welcome) + " "+ userName + "!";
         welcomeTextView.setText(message);
     }
 
