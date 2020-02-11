@@ -50,7 +50,7 @@
     <string name="description_statistics">Le graphe montre le progrès en pourcentage pour les 5 derniers jours.</string>
 
     <!--MAIN ACTIVITY-->
-    <string name="log_in">Log in</string>
+    <string name="log_in">Connexion</string>
     <string name="you_need_to_log_in_first">Vous devriez vous connectez d\'abord</string>
     <string name="exercise_where_ever_you_are">Exercices à faire partout!</string>
     <string name="done">Terminé</string>
