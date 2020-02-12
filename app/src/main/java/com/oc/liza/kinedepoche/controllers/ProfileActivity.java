@@ -148,8 +148,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        assert this.drawerLayout != null;
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+
+        if (this.drawerLayout != null && this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             this.drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
